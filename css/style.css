@@ -212,6 +212,39 @@ a:hover {
   line-height: 1.6;
 }
 
+/* KRABS page */
+.krabs-page {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px var(--spacing-page) 120px;
+  text-align: center;
+}
+
+.krabs-page h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  margin-bottom: 56px;
+}
+
+.crossword {
+  font-family: 'Courier New', monospace;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  display: inline-block;
+  text-align: left;
+  letter-spacing: 0.05em;
+}
+
+.crossword .highlight {
+  font-weight: 700;
+  color: #0c0c0c;
+  background: #d0c8be;
+  padding: 2px 4px;
+}
+
 /* Footer */
 .footer {
   padding: 40px var(--spacing-page);
