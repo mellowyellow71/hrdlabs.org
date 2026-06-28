@@ -4,60 +4,112 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HRD</title>
-  <meta name="description" content="HRD — Optimization & world models">
+  <meta name="description" content="HRD — Optimization, world models, and kernels">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="home">
 
-  <header class="header">
-    <div class="header-inner">
-      <a href="index.html" class="header-logo">
-        <img class="logo-art" src="assets/logo-mountain.svg" alt="HRD">
-        <span class="logo-text">HRD</span>
-      </a>
-      <nav class="header-nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="research.html">KRABS</a>
-      </nav>
-    </div>
+  <header class="home-header">
+    <a href="index.html" class="home-logo">
+      <img class="home-logo-mark" src="assets/pixel-logo.svg" alt="">
+      <span class="logo-text">HRD</span>
+    </a>
+    <nav class="home-nav">
+      <a href="optimization.html">Optimization<sup>1</sup></a>
+      <a href="worldmodels.html">World Models<sup>2</sup></a>
+      <a href="kernels.html">Kernels<sup>3</sup></a>
+    </nav>
   </header>
 
-  <div class="sections">
-    <div class="section-block">
-      <div class="section-image" style="background-image: url('assets/sketch-1.svg')"></div>
-      <div class="section-content">
-        <h2>Optimization</h2>
-      </div>
-    </div>
-
-    <div class="section-block">
-      <div class="section-image" style="background-image: url('assets/sketch-2.svg')"></div>
-      <div class="section-content">
-        <h2>World Models</h2>
-      </div>
-    </div>
-
-    <div class="section-block">
-      <div class="section-image" style="background-image: url('assets/sketch-3.svg')"></div>
-      <div class="section-content">
-        <h2>Kernels</h2>
-      </div>
-    </div>
+  <div class="home-art">
+    <pre id="catAscii" class="home-art-ascii" aria-hidden="true"></pre>
   </div>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-text">&copy; 2026 HRD</span>
-      <div class="footer-links">
-        <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
-        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:hello@hrdlabs.org">Contact</a>
-      </div>
-    </div>
-  </footer>
+  <div class="home-intro">
+    <h1>Optimization &amp;<br>World Models</h1>
+    <p>HRD is a research lab advancing optimization, world models,
+       and high-performance kernels.</p>
+    <p>We build the foundations for faster, more capable
+       machine intelligence.</p>
+  </div>
+
+  <div class="home-social">
+    <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+    <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+    <a href="research.html">KRABS</a>
+  </div>
+
+  <script src="assets/cat-data.js"></script>
+  <script>
+    (function () {
+      var pre = document.getElementById('catAscii');
+      if (!pre || !window.CAT_LINES) return;
+
+      var lines = window.CAT_LINES;
+      var rows = lines.length;
+      var cols = lines.reduce(function (m, l) { return Math.max(m, l.length); }, 0);
+
+      // Weighted glyph pool for the noise — mostly mid/light with the odd dense char.
+      var NOISE = '  ...,,,:::;;iilllwwW';
+      var DURATION = 4200;   // ms — a slow denoise
+      var STEP = 45;         // ms between noise re-rolls (diffusion-step cadence)
+      var finalText = lines.join('\n');
+
+      var reduce = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) { pre.textContent = finalText; return; }
+
+      // Per-cell convergence threshold — uniform random, so the cat emerges
+      // globally out of the static rather than as a directional wipe.
+      var th = [];
+      for (var r = 0; r < rows; r++) {
+        var tr = [];
+        for (var c = 0; c < cols; c++) tr.push(Math.random());
+        th.push(tr);
+      }
+
+      function ease(t) {            // easeInOutCubic: slow start, gentle settle
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      var start = null, lastDraw = -1e9;
+      function frame(ts) {
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / DURATION, 1);
+        if (p >= 1) { pre.textContent = finalText; return; }
+        if (ts - lastDraw >= STEP) {
+          lastDraw = ts;
+          var e = ease(p);
+          var out = '';
+          for (var r = 0; r < rows; r++) {
+            var line = lines[r];
+            var row = '';
+            for (var c = 0; c < cols; c++) {
+              var fch = c < line.length ? line[c] : ' ';
+              var t = th[r][c];
+              if (e >= t) {
+                row += fch;                        // converged — locked in
+              } else {
+                // anneal: as global progress nears this cell's threshold it
+                // flashes its true value more and more before locking.
+                var local = e / t;                 // 0..1
+                if (Math.random() < local * local) row += fch;
+                else row += NOISE[(Math.random() * NOISE.length) | 0];
+              }
+            }
+            out += row;
+            if (r < rows - 1) out += '\n';
+          }
+          pre.textContent = out;
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
 
 </body>
 </html>
