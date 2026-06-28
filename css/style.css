@@ -6,11 +6,11 @@
 }
 
 :root {
-  --color-bg: #f5f0ea;
-  --color-text: #2b2b2b;
-  --color-accent: #6b6b6b;
-  --color-muted: #8a8a8a;
-  --color-border: #d0c8be;
+  --color-bg: #0a0a0a;
+  --color-text: #e8e4df;
+  --color-accent: #9a948a;
+  --color-muted: #6f6a62;
+  --color-border: #2c2a26;
   --font-sans: 'Zen Kaku Gothic New', 'Meiryo', -apple-system, BlinkMacSystemFont, sans-serif;
   --max-width: 1100px;
   --spacing-page: 48px;
@@ -64,10 +64,11 @@ a:hover {
 }
 
 .logo-art {
-  height: 56px;
+  height: 40px;
   width: auto;
   display: block;
-  opacity: 0.85;
+  opacity: 0.9;
+  image-rendering: pixelated;
   transition: opacity 0.2s ease;
 }
 
@@ -245,6 +246,140 @@ a:hover {
   padding: 2px 4px;
 }
 
+/* Wide header (section landing) */
+.wide-header {
+  background: var(--color-bg);
+  width: 100%;
+  padding: 64px var(--spacing-page) 52px;
+}
+
+.wide-header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wide-header .header-art {
+  width: auto;
+  height: clamp(190px, 32vh, 300px);
+  max-width: 100%;
+  display: block;
+  margin: 0 auto 32px;
+}
+
+.wide-header h1 {
+  color: var(--color-text);
+  font-size: 2.9rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.wide-header p {
+  color: var(--color-accent);
+  font-size: 0.98rem;
+  line-height: 1.75;
+  max-width: 520px;
+  margin: 18px auto 0;
+}
+
+/* Blog post list */
+.posts {
+  max-width: 880px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 72px var(--spacing-page) 96px;
+}
+
+.posts-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 36px;
+  padding: 28px 20px;
+  margin: 0 -20px;
+  border-top: 1px solid var(--color-border);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.post:first-child {
+  border-top: none;
+}
+
+.post:hover {
+  background: #18150f;
+}
+
+.post-date {
+  font-size: 0.74rem;
+  color: var(--color-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-top: 6px;
+}
+
+.post-title {
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.post-title a {
+  color: var(--color-text);
+}
+
+.post-title a::after {
+  content: "\2192";
+  margin-left: 10px;
+  color: var(--color-muted);
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.post:hover .post-title a::after {
+  transform: translateX(5px);
+  color: var(--color-text);
+}
+
+.post-excerpt {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  line-height: 1.75;
+  margin-top: 10px;
+  max-width: 600px;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.post-tags span {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 3px 9px;
+}
+
 /* Footer */
 .footer {
   padding: 40px var(--spacing-page);
@@ -280,6 +415,201 @@ a:hover {
   color: var(--color-text);
 }
 
+/* ===== Home (dark hero, lattice-style layout) ===== */
+body.home {
+  position: relative;
+  background: #0a0a0a;
+  color: #e8e4df;
+  overflow: hidden;
+}
+
+body.home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(232, 228, 223, 0.05) 1px, transparent 1.5px);
+  background-size: 116px 116px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 48px;
+}
+
+.home-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.home-logo-mark {
+  height: 34px;
+  width: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.home-logo .logo-art {
+  height: 42px;
+  width: auto;
+  opacity: 0.9;
+}
+
+.home-logo .logo-text {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #e8e4df;
+}
+
+.home-nav {
+  display: flex;
+  gap: 38px;
+}
+
+.home-nav a {
+  font-size: 0.95rem;
+  color: #b9b3aa;
+  letter-spacing: 0.01em;
+}
+
+.home-nav a:hover,
+.home-nav a.active {
+  color: #e8e4df;
+}
+
+.home-nav sup {
+  font-size: 0.6em;
+  color: #6f6a62;
+  margin-left: 2px;
+}
+
+.home-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.home-art-ascii {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(5px, 0.68vw, 8.6px);
+  line-height: 1.18;
+  letter-spacing: 0;
+  white-space: pre;
+  user-select: none;
+  color: #b6b0a4;
+  /* Force grayscale (non-subpixel) anti-aliasing so every glyph renders as one
+     uniform tone — subpixel AA on small light-on-dark monospace text otherwise
+     produces colored (red/blue) fringes that read as "differently colored" chars. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+.home-intro {
+  position: absolute;
+  left: 48px;
+  bottom: 52px;
+  max-width: 480px;
+  z-index: 3;
+}
+
+.home-intro h1 {
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #f0ece6;
+  margin-bottom: 24px;
+}
+
+.home-intro p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #948e84;
+  max-width: 430px;
+}
+
+.home-intro p + p {
+  margin-top: 16px;
+}
+
+.home-social {
+  position: absolute;
+  right: 48px;
+  bottom: 52px;
+  z-index: 3;
+  display: flex;
+  gap: 30px;
+  font-family: 'Courier New', monospace;
+}
+
+.home-social a {
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: #948e84;
+}
+
+.home-social a:hover {
+  color: #e8e4df;
+}
+
+@media (max-width: 860px) {
+  body.home {
+    overflow: auto;
+  }
+
+  .home-header {
+    padding: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .home-nav {
+    gap: 22px;
+  }
+
+  .home-art {
+    position: relative;
+    inset: auto;
+    padding: 32px 24px 8px;
+    overflow: hidden;
+  }
+
+  .home-art-ascii {
+    font-size: 1.0vw;
+  }
+
+  .home-intro,
+  .home-social {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+
+  .home-intro {
+    padding: 16px 24px 0;
+    max-width: none;
+  }
+
+  .home-social {
+    padding: 36px 24px 48px;
+    justify-content: flex-start;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   :root {
@@ -299,6 +629,15 @@ a:hover {
     grid-template-columns: 1fr;
     gap: 28px;
     padding: 40px 0;
+  }
+
+  .wide-header h1 {
+    font-size: 1.9rem;
+  }
+
+  .post {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 
   .footer-inner {
