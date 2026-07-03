@@ -5,56 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HRD</title>
   <meta name="description" content="HRD — Optimization & world models">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2 15 14H1Z' fill='%23b3740f'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <header class="header">
     <div class="header-inner">
-      <a href="index.html" class="header-logo">
-        <img class="logo-art" src="assets/logo-mountain.svg" alt="HRD">
-        <span class="logo-text">HRD</span>
-      </a>
-      <nav class="header-nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="research.html">KRABS</a>
+      <a href="index.html" class="logo"><span class="logo-peak">▲</span>hrd</a>
+      <nav class="nav">
+        <a href="index.html" class="active">/home</a>
+        <a href="research.html">/krabs</a>
       </nav>
     </div>
   </header>
 
-  <div class="sections">
-    <div class="section-block">
-      <div class="section-image" style="background-image: url('assets/sketch-1.svg')"></div>
-      <div class="section-content">
-        <h2>Optimization</h2>
-      </div>
-    </div>
+  <main>
+    <section class="hero">
+      <pre class="ascii mountain" aria-hidden="true">                  <span class="lit">▲</span>
+                 ╱ ╲
+                ╱   ╲
+               ╱  ▲  ╲
+              ╱  ╱ ╲  ╲
+             ╱  ╱   ╲  ╲
+            ╱  ╱  <span class="lit">▲</span>  ╲  ╲
+           ╱  ╱  ╱ ╲  ╲  ╲
+          ╱  ╱  ╱   ╲  ╲  ╲
+  _______╱__╱__╱_____╲__╲__╲_______</pre>
+      <h1><span class="prompt">$</span> optimization · world models · kernels<span class="cursor">▊</span></h1>
+    </section>
 
-    <div class="section-block">
-      <div class="section-image" style="background-image: url('assets/sketch-2.svg')"></div>
-      <div class="section-content">
-        <h2>World Models</h2>
-      </div>
-    </div>
+    <section class="figures">
+      <figure class="figure fig-left">
+        <pre class="ascii" aria-hidden="true"> 1.00 ┤<span class="lit">●</span>
+      │ ╲
+      │  ╲
+      │   ╲
+      │    ╲__
+      │       ╲___
+      │           ╲______
+ 0.01 ┤                  ╲──<span class="lit">●</span>
+      └──────────────────────────
+      0                    steps</pre>
+        <figcaption><span class="fig-no">001</span>optimization</figcaption>
+      </figure>
 
-    <div class="section-block">
-      <div class="section-image" style="background-image: url('assets/sketch-3.svg')"></div>
-      <div class="section-content">
-        <h2>Kernels</h2>
-      </div>
-    </div>
-  </div>
+      <figure class="figure fig-right">
+        <pre class="ascii" aria-hidden="true">      ┌───────────┐
+     ╱           ╱│
+    ┌───────────┐ │
+    │           │ │
+    │  s ──▶ s′ │ │
+    │           │╱
+    └───────────┘</pre>
+        <figcaption><span class="fig-no">002</span>world models</figcaption>
+      </figure>
+
+      <figure class="figure fig-left">
+        <pre class="ascii" aria-hidden="true"> ┌──┬──┬──┐      ┌──┬──┬──┐
+ │▓▓│░░│░░│      │<span class="lit">▓▓</span>│▒▒│░░│
+ ├──┼──┼──┤      ├──┼──┼──┤
+ │░░│▓▓│░░│ ──▶  │▒▒│<span class="lit">▓▓</span>│▒▒│
+ ├──┼──┼──┤      ├──┼──┼──┤
+ │░░│░░│▓▓│      │░░│▒▒│<span class="lit">▓▓</span>│
+ └──┴──┴──┘      └──┴──┴──┘</pre>
+        <figcaption><span class="fig-no">003</span>kernels</figcaption>
+      </figure>
+    </section>
+  </main>
 
   <footer class="footer">
     <div class="footer-inner">
-      <span class="footer-text">&copy; 2026 HRD</span>
+      <span class="status"><span class="status-dot"></span>status: training</span>
+      <span class="footer-text">© 2026 hrd</span>
       <div class="footer-links">
-        <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
-        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:hello@hrdlabs.org">Contact</a>
+        <a href="https://twitter.com" target="_blank" rel="noopener">twitter</a>
+        <a href="https://github.com" target="_blank" rel="noopener">github</a>
+        <a href="mailto:hello@hrdlabs.org">contact</a>
       </div>
     </div>
   </footer>
