@@ -95,6 +95,22 @@ main table {
   font-size: 13px;
 }
 
+/* Display equation, set as terminal text */
+.hrd-eq {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-color);
+  background: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  padding: 14px 18px;
+  margin: 20px 0;
+  text-align: center;
+  overflow-x: auto;
+  white-space: pre;
+}
+
 /* Callout accents, retuned to the site palette */
 .note--info {
   border-left-color: var(--hrd-tan);
