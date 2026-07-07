@@ -2,7 +2,7 @@
 
 Website for **HRD Labs** — we study optimization and world models (and we really like compute).
 
-The site is a static, dependency-free site served through GitHub Pages (`CNAME` → hrdlabs.org). The design language is a dark, minimal, y2k pixel-art terminal: every page is a path in the same shell (`~`, `~/team`, `~/research/...`), JetBrains Mono everywhere, and a family of pixel-cat sprites as the lab mascot.
+The site is a static, dependency-free site served through GitHub Pages (`CNAME` → hrdlabs.org). The design language is a minimal, y2k pixel-art terminal: every page is a path in the same shell (`~`, `~/team`, `~/research/...`), JetBrains Mono everywhere, and a family of pixel-cat sprites as the lab mascot. Light theme by default with a dark theme behind the sun/moon toggle (persisted in `localStorage`, shared across all pages including the research article).
 
 ## Structure
 
@@ -17,6 +17,12 @@ The site is a static, dependency-free site served through GitHub Pages (`CNAME` 
 | `assets/` | Pixel-art SVG sprites: masthead cat, sitting cat (`currentColor`, tintable), sleeping cat |
 
 ## Changelog
+
+### 2026-07-07 — Light mode by default + interactive mascot
+- **Light theme added and made the default**, with the previous dark look one toggle away. Both palettes live as CSS variables in `css/style.css` (site) and `css/article.css` (article template overrides); the choice persists via `localStorage` and applies across every page.
+- **Pixel sun/moon theme toggle** on the main page, team page, and article terminal bar. Mermaid diagrams re-render to match the active theme.
+- **The masthead cat is alive now**: it blinks at random intervals, flicks its tail up on hover, and meows (`meow!`, `mrrp?`, `purrr`, `:3`) when clicked. Honors `prefers-reduced-motion`.
+- All cat sprites now use `currentColor`, so they recolor with the theme (ink cat on light, chalk cat on dark).
 
 ### 2026-07-07 — Unified dark pixel-art UI across the whole site
 - **Article pages now match the main site.** The research article was light-mode with system fonts; it is now permanently dark with the site palette and JetBrains Mono, done via CSS-variable overrides in `css/article.css` (the theme toggle was removed and the theme is pinned to dark).
