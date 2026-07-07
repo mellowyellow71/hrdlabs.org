@@ -4,72 +4,59 @@
 
 - **Authors**: Ray Kasichainula, Subha Vadlamannati, Bryan Dong, Gino Chiaranaipanich
 - **Published**: Jul. 05, 2026
+- **Code**: https://github.com/bryandong24/SPED
 
 ---
 
 ## Introduction
 
-Video is one of the slowest — but most useful — generative mediums. A modern video diffusion model spends seconds to minutes of GPU time producing a clip that plays back in moments, and once sampling has started, the generation is locked in: you cannot change your mind halfway through. That combination of latency and rigidity keeps video generation firmly in an *offline* workflow — write a prompt, wait, watch, repeat.
+Once a video diffusion model starts sampling, the prompt is locked in. If you change your mind halfway through — the dog should be a wolf now, the meadow should be snowing — you stop, re-prompt, and wait for a new clip that has nothing to do with the one you were watching.
 
-We wanted the opposite: a video model you can **talk to while it generates**. Say "a dog running through a meadow", watch the dog appear in real time, then say "it's winter now" and watch the meadow frost over — without stopping generation, without retraining anything, and without the seams of stitching two clips together.
+We wanted to change the prompt *while the model generates*: say "dog running through a meadow", watch the dog show up, then say "it's winter now" and watch the meadow frost over — one continuous video, no retraining, no stitching. The framing borrows from Thinking Machines' *Interaction Models* post; this is roughly that idea, applied to video generation.
 
-This post describes the system we built for the **2026 Inference-Time Compute Hackathon**. It has two halves:
+We built the system at the 2026 Inference-Time Compute Hackathon. There are two problems: injecting a new prompt mid-stream without breaking the video, and making generation fast enough that "mid-stream" means anything at all.
 
-1. **Training- and data-free interactivity.** A prompt-injection scheme for autoregressive video diffusion that conditions new chunks on a *linear interpolation between prompt embeddings*, so the scene transforms smoothly mid-stream. No fine-tuning, no adapter, no data — it works on top of any prompt-conditioned autoregressive video model.
-2. **Real-time inference.** A stack of inference-time optimizations — spectral resolution scheduling, fused custom kernels, and two-GPU pipeline parallelism — that together push generation *faster than playback*: 700 ms of compute per 750 ms chunk of video, and **0.69 s end-to-end from voice to pixels**.
+1. **Prompt injection.** During a transition, each chunk is conditioned on an interpolation between the old and new prompt embeddings. That is the entire method — no fine-tuning, no adapters, no data — so it works on any prompt-conditioned autoregressive video model.
+2. **Real-time inference.** Spectral resolution scheduling, FlashAttention 3, fused kernels, and a two-GPU DiT/VAE pipeline: 700 ms of compute per 750 ms chunk of video, and 0.69 s from voice to pixels.
 
 > **Demo examples from the live system:** "dog running in meadow" → *winter background replaces meadow* · "luxury car near beach" → *neon city replaces beach* · "beach scene" → *a storm erupts on the beach* · "dog running through meadow" → *dog becomes wolf in a winter landscape*.
-
-The result feels less like a video generator and more like a **steerable world model**: a simulator whose state you can perturb with language while it runs. We close with why we think this direction — interactivity as pure inference-time compute — gets more interesting as compute gets cheaper.
 
 ## Training-Free Prompt Injection
 
 ### Setup
 
-Our base model is **Causal Forcing++**, an autoregressive video diffusion model that generates video in **chunks of 3 latent frames** (0.75 s of video each).Causal Forcing++ was released June 1, 2026. Any prompt-conditioned autoregressive video diffusion model works — nothing in the method is specific to this architecture. Each chunk is denoised in 5 steps by a DiT conditioned on (a) the prompt embedding via cross-attention and (b) previously generated frames via a KV cache over a sliding context window. Voice input is transcribed with **faster-distil-whisper-large-v3** [@gandhi2023distil], so the interaction loop is: speak → transcribe → embed → inject.
+Our base model is **Causal Forcing++**, an autoregressive video diffusion model that generates video in **chunks of 3 latent frames** (0.75 s of video each). Generation is 480×832 at 16 fps, on H100s. Each chunk is denoised in 4 steps by a DiT conditioned on (a) the prompt — a frozen umT5-xxl embedding fed in through cross-attention — and (b) previously generated frames, via a KV cache over a sliding context window of 21 latent frames plus 3 sink frames. Voice input is transcribed with **faster-distil-whisper-large-v3**, so the interaction loop is: speak → transcribe → embed → inject. Code is at https://github.com/bryandong24/SPED.
 
 ### A simple idea: interpolate the prompt embeddings
 
-The naive way to change the scene mid-generation is to hard-swap the prompt embedding between chunk $t$ and chunk $t+1$. This fails visibly: the model's KV cache still encodes the old scene, the new cross-attention conditioning contradicts it, and the video jump-cuts or collapses.
+The naive way to change the scene mid-generation is to hard-swap the prompt embedding between chunk t and chunk t+1. This fails visibly: the model's KV cache still encodes the old scene, the new cross-attention conditioning contradicts it, and the video jump-cuts or collapses.
 
-Instead, we condition each chunk during the transition on a **linear interpolation between the old and new prompt embeddings**:
+Instead, during a transition each chunk is conditioned on an **interpolation between the old and new prompt embeddings**. The shipped version is a per-token *spherical* interpolation over the prompt's token embeddings — direction and magnitude interpolated separately, with a plain lerp fallback where a token pair is nearly collinear — eased by a min-jerk schedule over a ramp of 4 chunks, about 3 seconds of video:
 
-$
-\tilde{e}_t \;=\; (1-\lambda_t)\, e_{\text{old}} \;+\; \lambda_t\, e_{\text{new}},
-\qquad \lambda_t: 0 \to 1 \text{ over the transition window}
-$
+    ẽ_t = slerp(e_old, e_new; g_t),      g_t = r³(10 − 15r + 6r²),  r : 0 → 1 over the ramp
 
-Each successive chunk moves $\lambda_t$ further toward the new prompt, so the scene *morphs* rather than cuts: the meadow gradually frosts over instead of teleporting to winter. The KV cache is never invalidated — past frames remain valid context, and the model resolves the changing conditioning the same way it resolves any other temporal change.
-
-```mermaid
-flowchart LR
- P1["initial prompt e_old"] --> C1["chunk 1 (λ=0)"]
- C1 --"KV"--> C2["chunk 2 (λ=0)"]
- P2["injected prompt e_new"] -.-> C3
- C2 --"KV"--> C3["chunk 3 (λ=0.5)"]
- C3 --"KV"--> C4["chunk 4 (λ=1)"]
- P1 -.-> C1 & C2 & C3
-```
+Each chunk in the ramp is generated — and cached — under its own interpolated embedding, so the scene *morphs* rather than cuts: the meadow gradually frosts over instead of teleporting to winter. The KV cache is never invalidated. Past frames remain valid context, and the model resolves the changing conditioning the same way it resolves any other temporal change.
 
 ### What didn't work
 
-We spent roughly nine hours iterating on prompt-blending methods before landing on the scheme above. For posterity, the graveyard:
+We spent roughly nine hours iterating on prompt-blending methods before landing on the ramp — the experiment log runs to nineteen numbered phases. The short version:
 
-- **Naive hard swapping** of the prompt embedding — jump cuts and scene collapse.
-- **Backfilling the KV cache** with the new prompt (as in LongLive [@yang2025longlive]) — designed for a different regime; interacted badly with our short chunks.
-- **Sliding context-window interactions** — the transition point sliding out of the attention window mid-morph caused instability.
-- **Sweeping coefficients $\alpha$ and $\beta$** that separately weight self-attention and cross-attention contributions during the transition — tunable but brittle.
-- **Growing the attention window after the cut** — helped stability, and survives in the final recipe.
+- **Naive hard swap** — the KV cache has momentum: the old scene hangs on for a few chunks, then the video jump-cuts or collapses.
+- **Shrinking the context window around the switch** — transitions arrive faster, but as cuts, not morphs.
+- **Backfilling the KV cache** (as in LongLive) — replay the last N clean frames under the new prompt to rebuild the cache. We reproduced it training-free; it was designed for a different regime and interacted badly with our short chunks.
+- **Cache surgery** — keeping keys while swapping values, recaching under a null prompt, projecting the old prompt's direction out of the cache. Occasionally interesting, always brittle.
+- **Sweeping coefficients α and β** that separately weight self-attention and cross-attention after the switch — tunable, and also brittle.
+- **Growing the attention window after the cut** — helped stability in the experiments, though the final recipe doesn't need it.
 
-> The final recipe is embarrassingly simple — interpolate the conditioning, leave the cache alone, widen the window briefly after a switch. Every clever variant we tried lost to it.
+> The final recipe is embarrassingly simple — interpolate the conditioning and leave the cache alone. Every clever variant we tried lost to it.
 
 ## SPEED: Spectral Progressive Diffusion
 
-Interactivity is only worth having if the video keeps up with you. Our first problem: denoising a full grid of video tokens costs $O(n^2)$ in self-attention, and every denoising step pays it at full resolution.
+Interactivity is only worth having if the video keeps up with you. Our first problem: denoising a full grid of video tokens costs O(n²) in self-attention, and every denoising step pays it at full resolution.
 
-**SPEED (Spectral Progressive Diffusion)** restructures denoising to be *spectrally autoregressive in the frequency domain*: early steps operate on a low-frequency representation of the chunk (structure, layout, motion), and later steps progressively introduce higher frequency bands (texture, detail). Because early steps see far fewer effective tokens, their attention cost drops sharply, and the expensive full-resolution work is reserved for the final refinement steps where it actually matters.
+**SPEED (Spectral Progressive Diffusion)** (Xiao et al., 2026, arXiv:2605.18736) makes denoising *spectrally autoregressive*: early, high-noise steps run at reduced resolution — structure, layout, and motion live in the low frequencies — and later steps restore full resolution for texture and detail. We ported it into the causal, streaming setting, which took two fixes: RoPE indices are strided so low-resolution tokens land on the full-resolution position grid, and the cache-commit pass stays at full resolution so the KV cache never sees low-res context.
 
-On the Causal Forcing base model, SPEED yields a **10% throughput increase** with no training and no visible quality loss.
+On the frame-wise Causal Forcing++ model this is worth about **10%**: 22.2 → 24.3 FPS at half spatial scale with one low-resolution step, no visible quality loss. Modest, and honestly so — this model is already a few-step sampler, so there is little high-noise work left to make cheap. The paper's larger wins (2× and up) come from 50-step, full-resolution sampling.
 
 ## Kernel-Level Inference Optimizations
 
@@ -77,7 +64,7 @@ To know where the milliseconds were going, we profiled a full generation step. T
 
 | Operation class | Share of step time | What we did |
 |---|---|---|
-| Attention | 64% | FlashAttention 3 [@shah2024flashattention3] |
+| Attention | 64% | FlashAttention 3 |
 | Memory movement / elementwise | 24% | Fused custom kernels |
 | GEMM / linear | 12% | Left to cuBLAS |
 | Normalization | ~1% | Fused custom RMSNorm |
@@ -86,7 +73,7 @@ Two observations drove the kernel work. First, attention dominates — switching
 
 We wrote **fused kernels** that overlap compute with memory traffic and collapse chains of small ops into single launches:
 
-- **Fused RMSNorm: 7.71× speedup** over the unfused baseline.Norm is only ~1% of the step, so the end-to-end effect is small — but it was the cleanest demonstration that the fusion approach works, and the same pattern generalized to the gate.
+- **Fused RMSNorm: 7.71× speedup** over the unfused baseline.
 - **Fused SiLU gate: 1.68× speedup**, attacking the elementwise share directly.
 
 ## Pipeline Parallelism
@@ -95,80 +82,52 @@ Even with fast kernels, one GPU doing *everything* was not real-time. Generating
 
 The fix is classic systems work: the two stages have no reason to share a device.
 
-```mermaid
-flowchart LR
- subgraph GPU0["GPU 0 — DiT generation"]
- A["noise → 5 denoise steps → latent (~700 ms)"]
- end
- subgraph GPU1["GPU 1 — VAE decode"]
- B["latent → RGB frames (~276 ms)"]
- end
- A --"FIFO queue over NVLink"--> B
- B --> C["display"]
-```
-
-- **GPU 0** runs the DiT: raw noise in, five denoising steps, latent tensor out — **~700 ms per chunk**.
+- **GPU 0** runs the DiT: raw noise in, four denoising steps, latent tensor out — **~700 ms per chunk**.
 - **GPU 1** runs the VAE decode: latent tensor in, RGB pixel frames out — **~276 ms per chunk**.
-- A **FIFO queue over NVLink** connects them: while GPU 0 generates chunk $N$, it ships chunk $N-1$ to GPU 1 for decoding.
+- A **FIFO queue over NVLink** connects them: while GPU 0 generates chunk N, it ships chunk N−1 to GPU 1 for decoding.
 
 The VAE decode is now fully hidden behind the next chunk's generation. End-to-end latency drops by **28%**, and the critical path per chunk becomes just the 700 ms DiT pass — comfortably under the 750 ms of video each chunk contains.
 
 > **700 ms of compute per 750 ms of video.** Generation now runs faster than playback — the whole point.
 
-export const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-
 ## Results
 
-Putting it together, the live system:
+What the live system does:
 
-- **Runs faster than real time** — 700 ms of compute per chunk containing 750 ms of video.
-- **Responds in 0.69 seconds end-to-end** from spoken words to generated pixels (ASR → embedding → injection → first affected chunk).
-- **Transitions smoothly** — prompt injections morph the scene (meadow → winter, beach → storm, dog → wolf) with no jump cuts and no cache resets.
-- **Requires zero training and zero data** — the method touches only inference-time conditioning, so it applies to *any* prompt-conditioned autoregressive video generation model.
+- Generation stays ahead of playback — 700 ms of compute per chunk, and each chunk is 750 ms of video.
+- 0.69 s from the end of speech to the first affected pixels (transcribe → embed → inject → next chunk).
+- Transitions morph instead of cutting — meadow → winter, beach → storm, dog → wolf — with the KV cache intact the whole way through.
+- Nothing is trained, so nothing is model-specific.
 
- 
- 
- 
- "dog running in meadow" → winter background replaces meadow
- 
- 
- 
- "luxury car near beach" → neon city replaces beach
- 
- 
- 
- "beach scene" → a storm erupts on the beach
- 
- 
- 
- "dog running through meadow" → dog becomes wolf in winter background
- 
- 
+"dog running in meadow" → winter background replaces meadow
+"luxury car near beach" → neon city replaces beach
+"beach scene" → a storm erupts on the beach
+"dog running through meadow" → dog becomes wolf in winter background
 
 ### Relation to prior work
 
 Training-free semantic control of diffusion models is a rich area; our contribution is doing it *mid-stream in an autoregressive video model, at real-time speeds*:
 
-- **Prompt-to-Prompt** [@hertz2022prompt] edits images by manipulating cross-attention maps — we modify **no attention maps**, only the conditioning embedding.
-- **Attend-and-Excite** [@chefer2023attend] optimizes latents at sampling time to strengthen semantics — we require **no latent optimization**.
-- **SEGA** [@brack2023sega] steers generation along semantic directions found in noise-estimate space — we need **no search for steering vectors**.
+- **Prompt-to-Prompt** (Hertz et al., 2023) edits images by manipulating cross-attention maps — we modify **no attention maps**, only the conditioning embedding.
+- **Attend-and-Excite** (Chefer et al., 2023) optimizes latents at sampling time to strengthen semantics — we require **no latent optimization**.
+- **SEGA** (Brack et al., 2023) steers generation along semantic directions found in noise-estimate space — we need **no search for steering vectors**.
 
 The interpolation scheme is strictly simpler than all three, which is what makes it fast enough to run inside a real-time loop.
 
 ## The Infinite-Compute Regime
 
-The deeper reason we're excited about this line of work: **diffusion models thrive in the high-compute, low-data regime**, and inference-time compute is the resource whose price is falling fastest. Every optimization in this post — spectral scheduling, kernel fusion, pipeline parallelism — converts raw compute into *interactivity* without touching the model's weights or requiring a single training example.
+Diffusion models do best in the high-compute, low-data regime, and that is the regime that keeps getting cheaper. Everything in this post spends compute instead of data: the interpolation is free, SPEED and the kernels buy latency back, and the pipeline spends a second GPU. None of it touches the weights.
 
-Once a video generator is (a) real-time and (b) steerable mid-stream, it stops being a media tool and starts being a **learned simulator**. You are no longer rendering clips; you are perturbing the state of a world model with language and watching it respond. This is full-duplex conversation, but for video.
+A video model that is real-time and steerable mid-stream stops behaving like a media tool and starts behaving like a learned simulator — full-duplex, but for video.
 
-Some applications we find obvious in hindsight:
+The uses we actually want it for:
 
-- **Video game experiences** where the world is generated, not authored — and reacts to what players say.
-- **Learning experiences** where an explanation can be visualized, then transformed on request ("now show it in winter", "now slow it down").
-- **An actually immersive metaverse** — persistent generated environments that respond to their inhabitants in real time.
+- games where the world is generated rather than authored, and reacts to what players say;
+- explanations that can be transformed on request — "now show it in winter", "now slow it down";
+- persistent generated environments that respond to the people in them.
 
-All of this scales with inference-time compute, none of it with data collection. In the infinite-compute limit, the interactive world model is just *there*, waiting to be steered.
+All of it scales with inference-time compute, and none of it with data collection.
 
 ---
 
-*Built at the 2026 Inference-Time Compute Hackathon by Ray Kasichainula, Subha Vadlamannati, Bryan Dong, and Gino Chiaranaipanich.*
+*Built at the 2026 Inference-Time Compute Hackathon (Etched × Mercor × Cognition × Anthropic) by Ray Kasichainula, Subha Vadlamannati, Bryan Dong, and Gino Chiaranaipanich, where it won the $50,000 grand prize. Code: https://github.com/bryandong24/SPED.*
