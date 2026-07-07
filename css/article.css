@@ -1,0 +1,190 @@
+/* HRD Labs — unified article theme.
+   Loaded after the Astro template CSS; overrides its variables so research
+   articles share the main site's dark terminal look. */
+
+:root,
+[data-theme=dark],
+[data-theme=light] {
+  --page-bg: #070606;
+  --surface-bg: #0d0c0b;
+  --text-color: #c5c9c5;
+  --muted-color: #a6a69c;
+  --border-color: #1f1e1c;
+  --code-bg: #100f0e;
+  --primary-base: #c4b28a;
+  --primary-color: #c4b28a;
+  --on-primary: #070606;
+  --transparent-page-contrast: rgba(7, 6, 6, .85);
+  --link-underline: rgba(196, 178, 138, .45);
+  --link-underline-hover: #c4b28a;
+  --table-header-bg: #100f0e;
+  --table-row-odd-bg: #0b0a09;
+  --axis-color: #a6a69c;
+  --tick-color: #a6a69c;
+  --grid-color: rgba(197, 201, 197, .08);
+  --default-font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--page-bg);
+}
+
+::selection {
+  background: #c4b28a;
+  color: #070606;
+}
+
+h1, h2, h3, h4, h5, h6,
+.hero-title {
+  color: #e8e4df;
+}
+
+/* Mono display type runs wide — size the title down so it sits on two lines */
+.hero-title,
+.hero-title[data-astro-cid-uzw5or4x] {
+  font-size: clamp(26px, 4.6vw, 40px);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* Mono runs wide in data tables — tighten so less horizontal scroll is needed */
+main table {
+  font-size: 13px;
+}
+
+/* Callout accents, retuned to the site palette */
+.note--info {
+  border-left-color: #c4b28a;
+  background: color-mix(in oklab, #c4b28a 8%, var(--surface-bg));
+}
+
+.note--success {
+  border-left-color: #8a9a7b;
+  background: color-mix(in oklab, #8a9a7b 8%, var(--surface-bg));
+}
+
+/* ---- HRD Labs terminal bar ---- */
+.hrd-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #1f1e1c;
+  background: var(--page-bg);
+}
+
+.hrd-bar a {
+  text-decoration: none;
+}
+
+.hrd-bar__home {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #e8e4df;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.hrd-bar__home:hover {
+  color: #c4b28a;
+}
+
+.hrd-bar__home img {
+  width: 33px;
+  height: 28px;
+  image-rendering: pixelated;
+}
+
+.hrd-bar__path {
+  color: #575350;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.hrd-bar__cursor {
+  flex-shrink: 0;
+  width: 8px;
+  height: 15px;
+  background: #c4b28a;
+  animation: hrd-blink 2.2s step-end infinite;
+}
+
+@keyframes hrd-blink {
+  0%, 55% { opacity: 1; }
+  55.01%, 100% { opacity: 0; }
+}
+
+.hrd-bar__back {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: #8ea4a2;
+}
+
+.hrd-bar__back:hover {
+  color: #c4b28a;
+}
+
+@media (max-width: 560px) {
+  .hrd-bar {
+    padding: 14px 16px;
+  }
+
+  .hrd-bar__path,
+  .hrd-bar__cursor {
+    display: none;
+  }
+}
+
+/* Keep the floating mobile TOC button clear of the terminal bar */
+.toc-mobile-toggle {
+  top: 76px;
+}
+
+/* ---- Hero demo video (replaces the old decorative banner) ---- */
+.hero-banner,
+.hero-banner[data-astro-cid-uzw5or4x] {
+  aspect-ratio: auto;
+  height: auto;
+  overflow: visible;
+}
+
+.hero-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-demo video {
+  display: block;
+  width: 100%;
+  border: 1px solid #2b2a28;
+  border-radius: 2px;
+  background: #000;
+  box-shadow: 6px 6px 0 #14120f;
+}
+
+.hero-demo__caption {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #a6a69c;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hrd-bar__cursor {
+    animation: none;
+  }
+}
