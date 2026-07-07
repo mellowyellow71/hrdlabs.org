@@ -185,6 +185,90 @@ a {
 .tag-worldmodels { color: var(--color-blue); }
 .tag-notes { color: var(--color-tan); }
 
+/* Crumb (back link on subpages) */
+.crumb {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.crumb a {
+  color: var(--color-faint);
+}
+
+.crumb a:hover {
+  color: var(--color-tan);
+}
+
+/* Pixel cats */
+.mini-cat {
+  width: 22px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* Team teaser (index) */
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.team .prompt-line {
+  margin-bottom: 16px;
+}
+
+.team-line {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 12px;
+  margin: 0 -12px;
+  border-radius: 2px;
+}
+
+.team-line:hover {
+  background: var(--color-bg-hover);
+}
+
+.team-name {
+  color: var(--color-blue);
+  font-weight: 700;
+}
+
+.team-cats {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.team-cats .mini-cat:nth-child(1) { color: var(--color-tan); }
+.team-cats .mini-cat:nth-child(2) { color: var(--color-green); }
+.team-cats .mini-cat:nth-child(3) { color: var(--color-blue); }
+.team-cats .mini-cat:nth-child(4) { color: var(--color-teal); }
+.team-cats .mini-cat:nth-child(5) { color: var(--color-fg); }
+
+.team-cats .mini-cat {
+  transition: transform 0.18s ease;
+}
+
+.team-line:hover .mini-cat {
+  transform: translateY(-3px);
+}
+
+.team-line:hover .mini-cat:nth-child(2) { transition-delay: 0.04s; }
+.team-line:hover .mini-cat:nth-child(3) { transition-delay: 0.08s; }
+.team-line:hover .mini-cat:nth-child(4) { transition-delay: 0.12s; }
+.team-line:hover .mini-cat:nth-child(5) { transition-delay: 0.16s; }
+
+.team-arrow {
+  margin-left: auto;
+  color: var(--color-faint);
+}
+
+.team-line:hover .team-arrow {
+  color: var(--color-tan);
+}
+
 /* About */
 .about {
   display: flex;
@@ -196,6 +280,13 @@ a {
   color: var(--color-dim);
   max-width: 60ch;
   text-wrap: pretty;
+}
+
+.about-cat {
+  width: 34px;
+  height: 16px;
+  margin-left: 10px;
+  vertical-align: baseline;
 }
 
 /* Footer */
@@ -230,6 +321,16 @@ a {
   .cursor {
     animation: none;
   }
+
+  .team-cats .mini-cat,
+  .name-col .mini-cat {
+    transition: none;
+  }
+
+  .team-line:hover .mini-cat,
+  .name-col:hover .mini-cat {
+    transform: none;
+  }
 }
 
 /* Responsive */
@@ -249,24 +350,63 @@ a {
   }
 }
 
-/* ---- KRABS crossword (research.html) ---- */
+/* ---- KRABS crossword (team.html) ---- */
 .krabs {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.crossword {
-  font-family: var(--font-mono);
-  font-size: 20px;
-  line-height: 1.7;
-  letter-spacing: 0.05em;
-  color: var(--color-fg);
-  overflow-x: auto;
-  margin-top: 8px;
+.crossword-grid {
+  display: flex;
+  gap: 28px;
+  margin-top: 20px;
 }
 
-.crossword .highlight {
+.name-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.name-col .mini-cat {
+  color: var(--color-faintest);
+  margin-bottom: 12px;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.name-col:nth-child(1):hover .mini-cat { color: var(--color-tan); }
+.name-col:nth-child(2):hover .mini-cat { color: var(--color-green); }
+.name-col:nth-child(3):hover .mini-cat { color: var(--color-blue); }
+.name-col:nth-child(4):hover .mini-cat { color: var(--color-teal); }
+.name-col:nth-child(5):hover .mini-cat { color: var(--color-fg); }
+
+.name-col:hover .mini-cat {
+  transform: translateY(-3px);
+}
+
+.letter {
+  color: var(--color-dim);
+}
+
+.letter.first {
   font-weight: 700;
   color: var(--color-tan);
+}
+
+.name-col:hover .letter {
+  color: #e8e4df;
+}
+
+@media (max-width: 560px) {
+  .crossword-grid {
+    gap: 18px;
+  }
+
+  .name-col {
+    font-size: 16px;
+  }
 }
