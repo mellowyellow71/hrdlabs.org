@@ -4,18 +4,7 @@
  World Models"><meta property="og:image" content="https://hrdlabs.org/thumb.auto.jpg?v=a1e1a41f2b"><meta property="og:image:alt" content="Training-Free Interactive
  World Models"><meta property="article:published_time" content="Jul. 05, 2026"><meta property="article:author" content="Ray Kasichainula"><meta property="article:author" content="Subha Vadlamannati"><meta property="article:author" content="Bryan Dong"><meta property="article:author" content="Gino Chiaranaipanich"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Training-Free Interactive
  World Models"><meta name="twitter:description" content="We make an autoregressive video diffusion model interactive at real-time speeds: prompts can be injected mid-generation by interpolating prompt embeddings, and a stack of inference-time optimizations (spectral scheduling, fused kernels, pipeline parallelism) pushes generation faster than playback."><meta name="twitter:image" content="https://hrdlabs.org/thumb.auto.jpg?v=a1e1a41f2b"><meta name="twitter:image:alt" content="Training-Free Interactive
- World Models"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Training-Free Interactive\n World Models","description":"We make an autoregressive video diffusion model interactive at real-time speeds: prompts can be injected mid-generation by interpolating prompt embeddings, and a stack of inference-time optimizations (spectral scheduling, fused kernels, pipeline parallelism) pushes generation faster than playback.","datePublished":"Jul. 05, 2026","dateModified":"Jul. 05, 2026","author":[{"@type":"Person","name":"Ray Kasichainula"},{"@type":"Person","name":"Subha Vadlamannati"},{"@type":"Person","name":"Bryan Dong"},{"@type":"Person","name":"Gino Chiaranaipanich"}],"publisher":{"@type":"Organization","name":"Hugging Face","url":"https://huggingface.co"},"keywords":"video generation, world models, inference-time compute","mainEntityOfPage":"https://hrdlabs.org/research/interactive-world-models","image":["https://hrdlabs.org/thumb.auto.jpg?v=a1e1a41f2b"]}</script><script>
-      (() => {
-        try {
-          const saved = localStorage.getItem("theme");
-          const prefersDark =
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const theme = saved || (prefersDark ? "dark" : "light");
-          document.documentElement.setAttribute("data-theme", theme);
-        } catch {}
-      })();
-    </script><script>
+ World Models"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Training-Free Interactive\n World Models","description":"We make an autoregressive video diffusion model interactive at real-time speeds: prompts can be injected mid-generation by interpolating prompt embeddings, and a stack of inference-time optimizations (spectral scheduling, fused kernels, pipeline parallelism) pushes generation faster than playback.","datePublished":"Jul. 05, 2026","dateModified":"Jul. 05, 2026","author":[{"@type":"Person","name":"Ray Kasichainula"},{"@type":"Person","name":"Subha Vadlamannati"},{"@type":"Person","name":"Bryan Dong"},{"@type":"Person","name":"Gino Chiaranaipanich"}],"publisher":{"@type":"Organization","name":"HRD Labs","url":"https://hrdlabs.org"},"keywords":"video generation, world models, inference-time compute","mainEntityOfPage":"https://hrdlabs.org/research/interactive-world-models","image":["https://hrdlabs.org/thumb.auto.jpg?v=a1e1a41f2b"]}</script><script>
       // Debounce all ResizeObserver callbacks to prevent layout thrashing
       // during window resize (10+ D3 embeds re-render simultaneously otherwise)
       (() => {
@@ -37,267 +26,10 @@
           disconnect() { this._ro.disconnect(); clearTimeout(this._timer); }
         };
       })();
-    </script><script type="module" src="/scripts/color-palettes.js"></script><link rel="stylesheet" href="/research/interactive-world-models/_astro/index.B90vqLJZ.css">
+    </script><script type="module" src="/research/interactive-world-models/scripts/color-palettes.js"></script><link rel="stylesheet" href="/research/interactive-world-models/_astro/index.B90vqLJZ.css">
 <link rel="stylesheet" href="/research/interactive-world-models/_astro/dataviz.C6LJ9TGt.css">
 <link rel="stylesheet" href="/research/interactive-world-models/_astro/index.CKfycL-w.css"><script type="module" src="/research/interactive-world-models/_astro/hoisted.CDWrMzNH.js"></script>
-<script type="module" src="/research/interactive-world-models/_astro/page.QIkaaHhO.js"></script></head> <body> <button id="theme-toggle" aria-label="Toggle color theme" data-astro-cid-x3pjskd3> <span class="icon-wrapper" data-astro-cid-x3pjskd3> <svg class="icon icon--sun" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-x3pjskd3> <circle cx="12" cy="12" r="5" data-astro-cid-x3pjskd3></circle> <line x1="12" y1="1" x2="12" y2="4" data-astro-cid-x3pjskd3></line> <line x1="12" y1="20" x2="12" y2="23" data-astro-cid-x3pjskd3></line> <line x1="1" y1="12" x2="4" y2="12" data-astro-cid-x3pjskd3></line> <line x1="20" y1="12" x2="23" y2="12" data-astro-cid-x3pjskd3></line> <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" data-astro-cid-x3pjskd3></line> <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" data-astro-cid-x3pjskd3></line> <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" data-astro-cid-x3pjskd3></line> <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" data-astro-cid-x3pjskd3></line> </svg> <svg class="icon icon--moon" style="opacity:0" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-x3pjskd3> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" data-astro-cid-x3pjskd3></path> </svg> </span>  </button>  <section class="hero" data-astro-cid-uzw5or4x> <h1 class="hero-title" data-astro-cid-uzw5or4x>Training-Free Interactive<br/> World Models</h1> <div class="hero-banner" data-astro-cid-uzw5or4x> <figure class="html-embed" id="banner"><div class="html-embed__card is-frameless"><div id="frag-kxjytpzmk4i"><div class="d3-galaxy" id="banner"></div>
-<script>
-    (() => {
-        const ensureD3 = (cb) => {
-            if (window.d3 && typeof window.d3.select === 'function') return cb();
-            let s = document.getElementById('d3-cdn-script');
-            if (!s) {
-                s = document.createElement('script');
-                s.id = 'd3-cdn-script';
-                s.src = 'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js';
-                document.head.appendChild(s);
-            }
-            const onReady = () => { if (window.d3 && typeof window.d3.select === 'function') cb(); };
-            s.addEventListener('load', onReady, { once: true });
-            if (window.d3) onReady();
-        };
-
-        const bootstrap = () => {
-            const mount = document.currentScript ? document.currentScript.previousElementSibling : null;
-            const container = (mount && mount.querySelector && mount.querySelector('.d3-galaxy')) || document.querySelector('.d3-galaxy');
-            if (!container) return;
-            if (container.dataset) {
-                if (container.dataset.mounted === 'true') return;
-                container.dataset.mounted = 'true';
-            }
-            // Scene params (match previous Plotly ranges)
-            const cx = 1.5, cy = 0.5;
-            const a = 1.3, b = 0.45;
-            const numPoints = 3000;
-            const numArms = 3;
-            const numTurns = 2.1;
-            const angleJitter = 0.12;
-            const posNoise = 0.015;
-
-            // Circle size settings
-            const minCircleSize = 4;  // minimum diameter in pixels
-            const maxCircleSize = 12; // maximum diameter in pixels
-
-            // Generate spiral + bulge
-            const twoPi = Math.PI * 2;
-            const t = Float64Array.from({ length: numPoints }, () => Math.random() * (twoPi * numTurns));
-            const armIndices = Int16Array.from({ length: numPoints }, () => Math.floor(Math.random() * numArms));
-            const armOffsets = Float64Array.from(armIndices, (k) => k * (twoPi / numArms));
-            const theta = Float64Array.from(t, (tv, i) => tv + armOffsets[i] + d3.randomNormal.source(Math.random)(0, angleJitter)());
-            const rNorm = Float64Array.from(t, (tv) => Math.pow(tv / (twoPi * numTurns), 0.9));
-            const noiseScale = (rn) => posNoise * (0.8 + 0.6 * rn);
-            const noiseX = Float64Array.from(rNorm, (rn) => d3.randomNormal.source(Math.random)(0, noiseScale(rn))());
-            const noiseY = Float64Array.from(rNorm, (rn) => d3.randomNormal.source(Math.random)(0, noiseScale(rn))());
-
-            const xSpiral = Float64Array.from(theta, (th, i) => cx + a * rNorm[i] * Math.cos(th) + noiseX[i]);
-            const ySpiral = Float64Array.from(theta, (th, i) => cy + b * rNorm[i] * Math.sin(th) + noiseY[i]);
-
-            const bulgePoints = Math.floor(0.18 * numPoints);
-            const phiB = Float64Array.from({ length: bulgePoints }, () => twoPi * Math.random());
-            const rB = Float64Array.from({ length: bulgePoints }, () => Math.pow(Math.random(), 2.2) * 0.22);
-            const noiseXB = Float64Array.from({ length: bulgePoints }, () => d3.randomNormal.source(Math.random)(0, posNoise * 0.6)());
-            const noiseYB = Float64Array.from({ length: bulgePoints }, () => d3.randomNormal.source(Math.random)(0, posNoise * 0.6)());
-            const xBulge = Float64Array.from(phiB, (ph, i) => cx + a * rB[i] * Math.cos(ph) + noiseXB[i]);
-            const yBulge = Float64Array.from(phiB, (ph, i) => cy + b * rB[i] * Math.sin(ph) + noiseYB[i]);
-
-            // Concatenate
-            const X = Array.from(xSpiral).concat(Array.from(xBulge));
-            const Y = Array.from(ySpiral).concat(Array.from(yBulge));
-            const lenSpiral = xSpiral.length;
-
-            const zSpiral = Array.from(rNorm, (rn) => 1 - rn);
-            const maxRB = rB && rB.length ? (window.d3 && d3.max ? d3.max(rB) : Math.max.apply(null, Array.from(rB))) : 1;
-            const zBulge = Array.from(rB, (rb) => 1 - (maxRB ? rb / maxRB : 0));
-            const Zraw = zSpiral.concat(zBulge);
-            const sizesPx = Zraw.map((z) => minCircleSize + z * (maxCircleSize - minCircleSize)); // diameter in pixels
-
-            // Labels (same categories as Python version)
-            const labelOf = (i) => {
-                const z = Zraw[i];
-                if (z < 0.25) return 'tiny star';
-                if (z < 0.5) return 'small star';
-                if (z < 0.75) return 'medium star';
-                return 'large star';
-            };
-
-            // Sort by size ascending for z-index: small first, big last
-            const idx = d3.range(X.length).sort((i, j) => sizesPx[i] - sizesPx[j]);
-
-            // Colors: piecewise gradient [0 -> 0.5 -> 1]
-            const c0 = d3.rgb(78, 165, 183);    // rgb(78, 165, 183)
-            const c1 = d3.rgb(206, 192, 250);   // rgb(206, 192, 250)
-            const c2 = d3.rgb(232, 137, 171);   // rgb(232, 137, 171)
-            const interp01 = d3.interpolateRgb(c0, c1);
-            const interp12 = d3.interpolateRgb(c1, c2);
-            const colorFor = (v) => {
-                const t = Math.max(0, Math.min(1, v));
-                return t <= 0.5 ? interp01(t / 0.5) : interp12((t - 0.5) / 0.5);
-            };
-
-            // Create SVG
-            const svg = d3.select(container).append('svg')
-                .attr('width', '100%')
-                .style('display', 'block')
-                .style('cursor', 'crosshair');
-
-            const render = () => {
-                const width = container.clientWidth || 800;
-                const height = Math.max(260, Math.round(width / 3)); // keep ~3:1, min height
-                svg.attr('width', width).attr('height', height);
-
-                const xScale = d3.scaleLinear().domain([0, 3]).range([0, width]);
-                const yScale = d3.scaleLinear().domain([0, 1]).range([height, 0]);
-
-                // Subtle stroke color depending on theme
-                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-                const strokeColor = isDark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.12)';
-                const glowColor = isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.25)';
-
-
-                // Group for points (no blend mode for better print/PDF visibility)
-                const g = svg.selectAll('g.points').data([0]).join('g').attr('class', 'points');
-
-                // Ensure container can host an absolute tooltip
-                container.style.position = container.style.position || 'relative';
-                let tip = container.querySelector('.d3-tooltip');
-                let tipInner;
-                if (!tip) {
-                    tip = document.createElement('div');
-                    tip.className = 'd3-tooltip';
-                    Object.assign(tip.style, {
-                        position: 'absolute',
-                        top: '0px',
-                        left: '0px',
-                        transform: 'translate(-9999px, -9999px)',
-                        pointerEvents: 'none',
-                        padding: '10px 12px',
-                        borderRadius: '12px',
-                        fontSize: '12px',
-                        lineHeight: '1.35',
-                        border: '1px solid var(--border-color)',
-                        background: 'var(--surface-bg)',
-                        color: 'var(--text-color)',
-                        boxShadow: '0 8px 32px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.12)',
-                        opacity: '0',
-                        transition: 'opacity .12s ease',
-                        backdropFilter: 'saturate(1.12) blur(8px)',
-                        zIndex: '20'
-                    });
-                    tipInner = document.createElement('div');
-                    tipInner.className = 'd3-tooltip__inner';
-                    Object.assign(tipInner.style, {
-                        textAlign: 'left',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '6px',
-                        minWidth: '220px'
-                    });
-                    tip.appendChild(tipInner);
-                    container.appendChild(tip);
-                } else {
-                    tipInner = tip.querySelector('.d3-tooltip__inner') || tip;
-                }
-
-                // Final filter: remove small dots very close to the galaxy center (after placement)
-                const centerHoleRadius = 0.48; // elliptical radius threshold
-                const smallSizeThreshold = 7.5; // same notion as Python size cut
-                const rTotal = idx.map((i) => Math.sqrt(((X[i] - cx) / a) ** 2 + ((Y[i] - cy) / b) ** 2));
-                const idxFiltered = idx.filter((i, k) => !(rTotal[k] <= centerHoleRadius && sizesPx[i] < smallSizeThreshold));
-
-                const sel = g.selectAll('circle').data(idxFiltered, (i) => i);
-                sel.join(
-                    (enter) => enter.append('circle')
-                        .attr('cx', (i) => xScale(X[i]))
-                        .attr('cy', (i) => yScale(Y[i]))
-                        .attr('r', (i) => sizesPx[i] / 2)
-                        .attr('fill', (i) => colorFor(Zraw[i]))
-                        .attr('fill-opacity', 0.9)
-                        .on('mouseenter', function (ev, i) {
-                            d3.select(this).raise()
-                                .style('filter', `drop-shadow(0 0 8px ${glowColor})`)
-                                .transition().duration(120).ease(d3.easeCubicOut)
-                                .attr('r', (sizesPx[i] / 2) * 1.25)
-                                .attr('fill-opacity', 1);
-                            const r = Math.sqrt(((X[i] - cx) / a) ** 2 + ((Y[i] - cy) / b) ** 2);
-                            const type = i < lenSpiral ? 'spiral' : 'bulge';
-                            const arm = i < lenSpiral ? (armIndices[i] + 1) : null;
-                            tipInner.innerHTML =
-                                `<div style="font-weight:800;letter-spacing:.1px;"><strong>${labelOf(i)}</strong></div>` +
-                                `<div style="font-size:11px;color:var(--muted-color);margin-top:-4px;margin-bottom:2px;letter-spacing:.1px;"><strong>Type</strong> ${type}${arm ? ` (Arm ${arm})` : ''}</div>` +
-                                `<div style="padding-top:6px;border-top:1px solid var(--border-color);"><strong>Position</strong> X ${X[i].toFixed(2)} · <strong>Y</strong> ${Y[i].toFixed(2)}</div>` +
-                                `<div><strong>Distance</strong> Radius ${r.toFixed(3)} · <strong>Z</strong> ${Zraw[i].toFixed(3)}</div>` +
-                                `<div><strong>Size</strong> ${sizesPx[i].toFixed(1)} px</div>`;
-                            tip.style.opacity = '1';
-                        })
-                        .on('mousemove', (ev, i) => {
-                            const [mx, my] = d3.pointer(ev, container);
-                            const offsetX = 10, offsetY = 12;
-                            tip.style.transform = `translate(${Math.round(mx + offsetX)}px, ${Math.round(my + offsetY)}px)`;
-                        })
-                        .on('mouseleave', function () {
-                            tip.style.opacity = '0';
-                            tip.style.transform = 'translate(-9999px, -9999px)';
-                            d3.select(this)
-                                .style('filter', null)
-                                .transition().duration(120).ease(d3.easeCubicOut)
-                                .attr('r', (i2) => sizesPx[i2] / 2)
-                                .attr('fill-opacity', 0.9);
-                        }),
-                    (update) => update
-                        .attr('cx', (i) => xScale(X[i]))
-                        .attr('cy', (i) => yScale(Y[i]))
-                        .attr('r', (i) => sizesPx[i] / 2)
-                        .attr('fill', (i) => colorFor(Zraw[i]))
-                        .attr('fill-opacity', 0.9)
-                        .on('mouseenter', function (ev, i) {
-                            d3.select(this).raise()
-                                .style('filter', `drop-shadow(0 0 8px ${glowColor})`)
-                                .transition().duration(120).ease(d3.easeCubicOut)
-                                .attr('r', (sizesPx[i] / 2) * 1.25)
-                                .attr('fill-opacity', 1);
-                            const r = Math.sqrt(((X[i] - cx) / a) ** 2 + ((Y[i] - cy) / b) ** 2);
-                            const type = i < lenSpiral ? 'spiral' : 'bulge';
-                            const arm = i < lenSpiral ? (armIndices[i] + 1) : null;
-                            tipInner.innerHTML =
-                                `<div style="font-weight:800;letter-spacing:.1px;"><strong>${labelOf(i)}</strong></div>` +
-                                `<div style="font-size:11px;color:var(--muted-color);margin-top:-4px;margin-bottom:2px;letter-spacing:.1px;"><strong>Type</strong> ${type}${arm ? ` (Arm ${arm})` : ''}</div>` +
-                                `<div style="padding-top:6px;border-top:1px solid var(--border-color);"><strong>Position</strong> X ${X[i].toFixed(2)} · <strong>Y</strong> ${Y[i].toFixed(2)}</div>` +
-                                `<div><strong>Distance</strong> Radius ${r.toFixed(3)} · <strong>Z</strong> ${Zraw[i].toFixed(3)}</div>` +
-                                `<div><strong>Size</strong> ${sizesPx[i].toFixed(1)} px</div>`;
-                            tip.style.opacity = '1';
-                        })
-                        .on('mousemove', (ev, i) => {
-                            const [mx, my] = d3.pointer(ev, container);
-                            const offsetX = 10, offsetY = 12;
-                            tip.style.transform = `translate(${Math.round(mx + offsetX)}px, ${Math.round(my + offsetY)}px)`;
-                        })
-                        .on('mouseleave', function () {
-                            tip.style.opacity = '0';
-                            tip.style.transform = 'translate(-9999px, -9999px)';
-                            d3.select(this)
-                                .style('filter', null)
-                                .transition().duration(120).ease(d3.easeCubicOut)
-                                .attr('r', (i2) => sizesPx[i2] / 2)
-                                .attr('fill-opacity', 0.9);
-                        })
-                );
-            };
-
-            // First render + resize
-            if (window.ResizeObserver) {
-                const ro = new ResizeObserver(() => render());
-                ro.observe(container);
-            } else {
-                window.addEventListener('resize', render);
-            }
-            render();
-        };
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => ensureD3(bootstrap), { once: true });
-        } else { ensureD3(bootstrap); }
-    })();
-</script></div></div></figure> </div> <p class="hero-desc" data-astro-cid-uzw5or4x>Real-time prompt injection for autoregressive video generation — no training, no data</p> </section> <script>
+<script type="module" src="/research/interactive-world-models/_astro/page.QIkaaHhO.js"></script><script>document.documentElement.dataset.theme=localStorage.getItem("theme")||"light";</script><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3' y='1' width='7' height='14' fill='%23c4b28a'/%3E%3C/svg%3E"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/article.css"></head> <body> <header class="hrd-bar"> <a class="hrd-bar__home" href="/"> <svg class="hrd-bar__cat" width="33" height="28" viewBox="-1 -1 22 19" aria-hidden="true"><use href="/assets/pixel-cat.svg#cat"/></svg> HRD Labs </a> <span class="hrd-bar__path">~/research/interactive-world-models</span> <span class="hrd-bar__cursor" aria-hidden="true"></span> <button class="theme-toggle" type="button" aria-label="Toggle light/dark theme"><svg class="icon-moon" width="14" height="14" viewBox="0 0 7 7" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><rect x="2" y="0" width="3" height="1"/><rect x="1" y="1" width="2" height="1"/><rect x="0" y="2" width="2" height="3"/><rect x="1" y="5" width="2" height="1"/><rect x="2" y="6" width="3" height="1"/></svg><svg class="icon-sun" width="14" height="14" viewBox="0 0 9 9" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="3" height="3"/><rect x="4" y="0" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/></svg></button> <a class="hrd-bar__back" href="/">$ cd ~</a> </header>  <section class="hero" data-astro-cid-uzw5or4x> <h1 class="hero-title" data-astro-cid-uzw5or4x>Training-Free Interactive<br/> World Models</h1> <div class="hero-banner" data-astro-cid-uzw5or4x> <figure class="html-embed" id="banner"><div class="html-embed__card is-frameless"><div class="hero-demo"><video src="/research/interactive-world-models/video/car.mp4" autoplay loop muted="true" playsinline aria-label="Generated video: a luxury car drives along a coast road, and an injected prompt replaces the beach behind it with a neon city"></video><div class="hero-demo__caption">live system output, one continuous generation: an injected prompt swaps the beach behind the car for a neon city</div></div></div></figure> </div> <p class="hero-desc" data-astro-cid-uzw5or4x>Real-time prompt injection for autoregressive video generation, with no training or data</p> </section> <script>
   (() => {
     const el = document.querySelector(".hero-title");
     if (!el) return;
@@ -305,100 +37,7 @@
     if (len > 100) el.dataset.titleSize = "sm";
     else if (len > 60) el.dataset.titleSize = "md";
   })();
-</script> <header class="meta" aria-label="Article meta information" data-astro-cid-uzw5or4x> <div class="meta-container" data-astro-cid-uzw5or4x> <div class="meta-container-cell" data-astro-cid-uzw5or4x> <h3 data-astro-cid-uzw5or4x>Authors</h3> <ul class="authors" data-astro-cid-uzw5or4x> <li data-astro-cid-uzw5or4x> Ray Kasichainula<span data-astro-cid-uzw5or4x>, </span> </li><li data-astro-cid-uzw5or4x> Subha Vadlamannati<span data-astro-cid-uzw5or4x>, </span> </li><li data-astro-cid-uzw5or4x> Bryan Dong<span data-astro-cid-uzw5or4x>, </span> </li><li data-astro-cid-uzw5or4x> Gino Chiaranaipanich </li> </ul> </div> <div class="meta-container-cell meta-container-cell--affiliations" data-astro-cid-uzw5or4x> <h3 data-astro-cid-uzw5or4x>Affiliation</h3> <p data-astro-cid-uzw5or4x> <a href="https://hrdlabs.org" target="_blank" rel="noopener noreferrer" data-astro-cid-uzw5or4x> HRD Labs </a> </p> </div>  <div class="meta-container-cell meta-container-cell--published" data-astro-cid-uzw5or4x> <h3 data-astro-cid-uzw5or4x>Published</h3> <p data-astro-cid-uzw5or4x>Jul. 05, 2026</p> </div>  <div class="meta-container-cell meta-container-cell--pdf" data-astro-cid-uzw5or4x> <div class="pdf-header-wrapper" data-astro-cid-uzw5or4x> <h3 data-astro-cid-uzw5or4x>PDF</h3> <span class="pro-badge-wrapper" style="display: none;" data-astro-cid-uzw5or4x> <span class="pro-badge-prefix" data-astro-cid-uzw5or4x>- you are</span> <span class="pro-badge" data-astro-cid-uzw5or4x>PRO</span> </span> <span class="pro-only-label" style="display: none;" data-astro-cid-uzw5or4x> <span class="pro-only-dash" data-astro-cid-uzw5or4x>-</span> <span class="pro-only-text" data-astro-cid-uzw5or4x>pro only</span> <svg class="pro-only-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-uzw5or4x> <rect x="3" y="11" width="18" height="11" rx="2" ry="2" data-astro-cid-uzw5or4x></rect> <path d="M7 11V7a5 5 0 0 1 10 0v4" data-astro-cid-uzw5or4x></path> </svg> </span> </div> <div id="pdf-download-container" data-pdf-pro-only="false" data-astro-cid-uzw5or4x> <p class="pdf-loading" data-astro-cid-uzw5or4x>Checking access...</p> <p class="pdf-pro-only" style="display: none;" data-astro-cid-uzw5or4x> <a class="button" href="/training-free-interactive-world-models.pdf" download="training-free-interactive-world-models.pdf" aria-label="Download PDF training-free-interactive-world-models.pdf" data-astro-cid-uzw5or4x>
-Download PDF
-</a> </p> <div class="pdf-locked" style="display: none;" data-astro-cid-uzw5or4x> <a class="button button-locked" href="https://huggingface.co/subscribe/pro" target="_blank" rel="noopener noreferrer" data-astro-cid-uzw5or4x> <svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="img" width="1em" height="1em" viewBox="0 0 12 12" fill="none" data-astro-cid-uzw5or4x> <path d="M6.48 1.26c0 1.55.67 2.58 1.5 3.24.86.68 1.9 1 2.58 1.07v.86A5.3 5.3 0 0 0 7.99 7.5a3.95 3.95 0 0 0-1.51 3.24h-.96c0-1.55-.67-2.58-1.5-3.24a5.3 5.3 0 0 0-2.58-1.07v-.86A5.3 5.3 0 0 0 4.01 4.5a3.95 3.95 0 0 0 1.51-3.24h.96Z" fill="currentColor" data-astro-cid-uzw5or4x></path> </svg> <span class="locked-title" data-astro-cid-uzw5or4x>Subscribe to Pro</span> </a> </div> </div> </div> </div> </header> <script>
-    // PDF access control for Pro users only
-    const LOCAL_IS_PRO = true;
-    const FALLBACK_TIMEOUT_MS = 3000;
-    const MAX_RETRY_ATTEMPTS = 100;
-    let userPlanChecked = false;
-    let initialized = false;
-
-    function isProUser(plan) {
-      if (!plan) return false;
-      return plan.user === "pro";
-    }
-
-    function updatePdfAccess(isPro, pdfProOnly) {
-      const loadingEl = document.querySelector(".pdf-loading");
-      const proOnlyEl = document.querySelector(".pdf-pro-only");
-      const lockedEl = document.querySelector(".pdf-locked");
-      const proOnlyLabel = document.querySelector(".pro-only-label");
-      const proBadgeWrapper = document.querySelector(".pro-badge-wrapper");
-      if (loadingEl) loadingEl.style.display = "none";
-      if (!pdfProOnly) {
-        if (proOnlyEl) proOnlyEl.style.display = "block";
-        if (proOnlyLabel) proOnlyLabel.style.display = "none";
-        if (lockedEl) lockedEl.style.display = "none";
-        if (proBadgeWrapper) proBadgeWrapper.style.display = "none";
-        return;
-      }
-      if (isPro) {
-        if (proOnlyEl) proOnlyEl.style.display = "block";
-        if (proOnlyLabel) proOnlyLabel.style.display = "none";
-        if (lockedEl) lockedEl.style.display = "none";
-        if (proBadgeWrapper) proBadgeWrapper.style.display = "inline-flex";
-      } else {
-        if (proOnlyEl) proOnlyEl.style.display = "none";
-        if (proOnlyLabel) proOnlyLabel.style.display = "inline-flex";
-        if (lockedEl) lockedEl.style.display = "block";
-        if (proBadgeWrapper) proBadgeWrapper.style.display = "none";
-      }
-    }
-
-    function handleUserPlan(plan, pdfProOnly) {
-      userPlanChecked = true;
-      updatePdfAccess(isProUser(plan), pdfProOnly);
-    }
-
-    function handleFallback(pdfProOnly) {
-      handleUserPlan(LOCAL_IS_PRO ? { user: "pro" } : { user: "free" }, pdfProOnly);
-    }
-
-    function initPdfAccess(retryCount = 0) {
-      if (initialized) return;
-      const pdfContainer = document.querySelector("#pdf-download-container");
-      if (!pdfContainer) {
-        if (retryCount < MAX_RETRY_ATTEMPTS) {
-          setTimeout(() => initPdfAccess(retryCount + 1), 10);
-        } else {
-          setTimeout(() => {
-            const container = document.querySelector("#pdf-download-container");
-            if (container && !initialized) {
-              initialized = true;
-              const pdfProOnly = container.getAttribute("data-pdf-pro-only") === "true";
-              updatePdfAccess(!pdfProOnly, pdfProOnly);
-            }
-          }, 100);
-        }
-        return;
-      }
-      initialized = true;
-      const pdfProOnly = pdfContainer.getAttribute("data-pdf-pro-only") === "true";
-      if (!pdfProOnly) {
-        updatePdfAccess(true, pdfProOnly);
-      } else {
-        window.addEventListener("message", (event) => {
-          if (event.data.type === "USER_PLAN") handleUserPlan(event.data.plan, pdfProOnly);
-        });
-        if (window.parent && window.parent !== window) {
-          window.parent.postMessage({ type: "USER_PLAN_REQUEST" }, "*");
-          setTimeout(() => { if (!userPlanChecked) handleFallback(pdfProOnly); }, FALLBACK_TIMEOUT_MS);
-        } else {
-          handleFallback(pdfProOnly);
-        }
-      }
-    }
-
-    (function() {
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => setTimeout(() => initPdfAccess(), 0));
-      } else {
-        setTimeout(() => initPdfAccess(), 0);
-      }
-    })();
-  </script>   <section class="content-grid"> <nav class="table-of-contents toc-loading" aria-label="Table of Contents" data-auto-collapse="1"> <div class="title">Table of Contents</div> <div id="article-toc-placeholder"></div> </nav> <!-- Mobile sidebar --> <button class="toc-mobile-toggle" aria-label="Open table of contents" aria-expanded="false"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="3" y1="6" x2="21" y2="6"></line> <line x1="3" y1="12" x2="21" y2="12"></line> <line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> <div class="toc-mobile-backdrop" aria-hidden="true"></div> <aside class="toc-mobile-sidebar toc-loading" aria-label="Table of Contents"> <div class="toc-mobile-sidebar__header"> <span class="toc-mobile-sidebar__title">Table of Contents</span> <div class="toc-mobile-sidebar__actions"> <button class="toc-mobile-sidebar__theme" aria-label="Toggle color theme"> <svg class="icon light" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="5"></circle> <line x1="12" y1="1" x2="12" y2="4"></line> <line x1="12" y1="20" x2="12" y2="23"></line> <line x1="1" y1="12" x2="4" y2="12"></line> <line x1="20" y1="12" x2="23" y2="12"></line> <line x1="4.22" y1="4.22" x2="6.34" y2="6.34"></line> <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"></line> <line x1="4.22" y1="19.78" x2="6.34" y2="17.66"></line> <line x1="17.66" y1="6.34" x2="19.78" y2="4.22"></line> </svg> <svg class="icon dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path> </svg> </button> <button class="toc-mobile-sidebar__close" aria-label="Close table of contents"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line> </svg> </button> </div> </div> <div class="toc-mobile-sidebar__body" id="article-toc-mobile-placeholder"></div> </aside> <script>
+</script> <header class="meta" aria-label="Article meta information" data-astro-cid-uzw5or4x> <div class="meta-container" data-astro-cid-uzw5or4x> <div class="meta-container-cell" data-astro-cid-uzw5or4x> <h3 data-astro-cid-uzw5or4x>Authors</h3> <ul class="authors" data-astro-cid-uzw5or4x> <li data-astro-cid-uzw5or4x> Ray Kasichainula<span data-astro-cid-uzw5or4x>, </span> </li><li data-astro-cid-uzw5or4x> Subha Vadlamannati<span data-astro-cid-uzw5or4x>, </span> </li><li data-astro-cid-uzw5or4x> Bryan Dong<span data-astro-cid-uzw5or4x>, </span> </li><li data-astro-cid-uzw5or4x> Gino Chiaranaipanich </li> </ul> </div> <div class="meta-container-cell meta-container-cell--affiliations" data-astro-cid-uzw5or4x> <h3 data-astro-cid-uzw5or4x>Affiliation</h3> <p data-astro-cid-uzw5or4x> <a href="https://hrdlabs.org" target="_blank" rel="noopener noreferrer" data-astro-cid-uzw5or4x> HRD Labs </a> </p> </div>  <div class="meta-container-cell meta-container-cell--published" data-astro-cid-uzw5or4x> <h3 data-astro-cid-uzw5or4x>Published</h3> <p data-astro-cid-uzw5or4x>Jul. 05, 2026</p> </div>  </div> </header>    <section class="content-grid"> <nav class="table-of-contents toc-loading" aria-label="Table of Contents" data-auto-collapse="1"> <div class="title">Table of Contents</div> <div id="article-toc-placeholder"></div> </nav> <!-- Mobile sidebar --> <button class="toc-mobile-toggle" aria-label="Open table of contents" aria-expanded="false"> <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="3" y1="6" x2="21" y2="6"></line> <line x1="3" y1="12" x2="21" y2="12"></line> <line x1="3" y1="18" x2="21" y2="18"></line> </svg> </button> <div class="toc-mobile-backdrop" aria-hidden="true"></div> <aside class="toc-mobile-sidebar toc-loading" aria-label="Table of Contents"> <div class="toc-mobile-sidebar__header"> <span class="toc-mobile-sidebar__title">Table of Contents</span> <div class="toc-mobile-sidebar__actions">  <button class="toc-mobile-sidebar__close" aria-label="Close table of contents"> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <line x1="18" y1="6" x2="6" y2="18"></line> <line x1="6" y1="6" x2="18" y2="18"></line> </svg> </button> </div> </div> <div class="toc-mobile-sidebar__body" id="article-toc-mobile-placeholder"></div> </aside> <script>
   // Build TOC from article headings (h2/h3/h4) and render into the sticky aside
   const buildTOC = () => {
     const holder = document.getElementById("article-toc-placeholder");
@@ -1237,7 +876,7 @@ Download PDF
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
     if (backdrop) backdrop.addEventListener("click", closeSidebar);
 
-    // Sidebar theme toggle — reuses the same logic as the main #theme-toggle
+    // Sidebar theme toggle: reuses the same logic as the main #theme-toggle
     const sidebarThemeBtn = document.querySelector(".toc-mobile-sidebar__theme");
     if (sidebarThemeBtn) {
       sidebarThemeBtn.addEventListener("click", () => {
@@ -1273,47 +912,43 @@ Download PDF
     buildTOC();
   }
 </script>  <main> <h2 id="introduction"><a href="#introduction">Introduction</a></h2>
-<p>Video is one of the slowest — but most useful — generative mediums. A modern video diffusion model spends seconds to minutes of GPU time producing a clip that plays back in moments, and once sampling has started, the generation is locked in: you cannot change your mind halfway through. That combination of latency and rigidity keeps video generation firmly in an <em>offline</em> workflow — write a prompt, wait, watch, repeat.</p>
-<p>We wanted the opposite: a video model you can <strong>talk to while it generates</strong>. Say “a dog running through a meadow”, watch the dog appear in real time, then say “it’s winter now” and watch the meadow frost over — without stopping generation, without retraining anything, and without the seams of stitching two clips together.</p>
-<p>This post describes the system we built for the <strong>2026 Inference-Time Compute Hackathon</strong>. It has two halves:</p>
+<p>We are interested in video models as world models. Once a model can produce frames about as fast as you watch them, the interesting question stops being which clip you got back and becomes whether you can change what happens while it runs. A model you can steer mid-generation behaves less like a render job and more like a simulator you talk to, and that is the direction we wanted to push on.</p>
+<p>Today's video models don't work that way. You write a prompt, the model samples for a while, and you get back a fixed clip. If you change your mind partway through, say the meadow should be snowing now, or the dog should be a wolf, there is nothing to do but stop, re-prompt, and wait for a new clip that has no relationship to the one you were just watching.</p>
+<p>We wanted to change the prompt <em>while the model generates</em>: say “dog running through a meadow”, watch the dog show up, then say “it's winter now” and watch the meadow frost over, as one continuous video with no retraining and no stitching. The framing follows Thinking Machines' <em>Interaction Models</em> post, applied to video instead of text.</p>
+<p>We built the system at the 2026 Inference-Time Compute Hackathon. Two things have to work at once: you have to inject a new prompt mid-stream without breaking the video, and generation has to be fast enough that “mid-stream” means anything at all.</p>
 <ol>
-<li><strong>Training- and data-free interactivity.</strong> A prompt-injection scheme for autoregressive video diffusion that conditions new chunks on a <em>linear interpolation between prompt embeddings</em>, so the scene transforms smoothly mid-stream. No fine-tuning, no adapter, no data — it works on top of any prompt-conditioned autoregressive video model.</li>
-<li><strong>Real-time inference.</strong> A stack of inference-time optimizations — spectral resolution scheduling, fused custom kernels, and two-GPU pipeline parallelism — that together push generation <em>faster than playback</em>: 700 ms of compute per 750 ms chunk of video, and <strong>0.69 s end-to-end from voice to pixels</strong>.</li>
+<li><strong>Prompt injection.</strong> During a transition, each chunk is conditioned on an interpolation between the old and new prompt embeddings. That is the entire method, with no fine-tuning, no adapters, and no data, so it works on any prompt-conditioned autoregressive video model.</li>
+<li><strong>Real-time inference.</strong> Spectral resolution scheduling, FlashAttention 3, fused kernels, and a two-GPU DiT/VAE pipeline: 700 ms of compute per 750 ms chunk of video, and 0.69 s from voice to pixels.</li>
 </ol>
-<div class="note note--info" data-astro-cid-qg6lmfty> <!-- When there's no title, emoji is above content -->
-    <div class="note__layout" data-astro-cid-qg6lmfty> <div class="note__icon" aria-hidden="true" data-astro-cid-qg6lmfty> <span class="note__emoji" data-astro-cid-qg6lmfty>🎬</span> </div> <div class="note__body" data-astro-cid-qg6lmfty> <div class="note__content" data-astro-cid-qg6lmfty> <p><strong>Demo examples from the live system:</strong> “dog running in meadow” → <em>winter background replaces meadow</em> · “luxury car near beach” → <em>neon city replaces beach</em> · “beach scene” → <em>a storm erupts on the beach</em> · “dog running through meadow” → <em>dog becomes wolf in a winter landscape</em>.</p> </div> </div> </div> </div> 
-<p>The result feels less like a video generator and more like a <strong>steerable world model</strong>: a simulator whose state you can perturb with language while it runs. We close with why we think this direction — interactivity as pure inference-time compute — gets more interesting as compute gets cheaper.</p>
+
+
 <h2 id="training-free-prompt-injection"><a href="#training-free-prompt-injection">Training-Free Prompt Injection</a></h2>
 <h3 id="setup"><a href="#setup">Setup</a></h3>
-<p>Our base model is <strong>Causal Forcing++</strong>, an autoregressive video diffusion model that generates video in <strong>chunks of 3 latent frames</strong> (0.75 s of video each).<div class="sidenote-container"> <aside class="sidenote"> Causal Forcing++ was released June 1, 2026. Any prompt-conditioned autoregressive video diffusion model works — nothing in the method is specific to this architecture. </aside> </div>   Each chunk is denoised in 5 steps by a DiT conditioned on (a) the prompt embedding via cross-attention and (b) previously generated frames via a KV cache over a sliding context window. Voice input is transcribed with <strong>faster-distil-whisper-large-v3</strong> <span class="" id="citation--gandhi2023distil--1">(<a href="#bib-gandhi2023distil" id="refctx-bib-gandhi2023distil-1">Gandhi et al., 2023</a>)</span>, so the interaction loop is: speak → transcribe → embed → inject.</p>
+<p>Our base model is <strong>Causal Forcing++</strong>, an autoregressive video diffusion model that generates video in <strong>chunks of 3 latent frames</strong> (0.75 s of video each).<div class="sidenote-container"> <aside class="sidenote"> Causal Forcing++ was released June 1, 2026. Any prompt-conditioned autoregressive video diffusion model works; nothing in the method is specific to this architecture. </aside> </div>   Generation is 480×832 at 16 fps, on H100s. Each chunk is denoised in 4 steps by a DiT conditioned on (a) the prompt, a frozen umT5-xxl embedding fed in through cross-attention, and (b) previously generated frames, via a KV cache over a sliding context window of 21 latent frames plus 3 sink frames. Voice input is transcribed with <strong>faster-distil-whisper-large-v3</strong> <span class="" id="citation--gandhi2023distil--1">(<a href="#bib-gandhi2023distil" id="refctx-bib-gandhi2023distil-1">Gandhi et al., 2023</a>)</span>, so the interaction loop is: speak → transcribe → embed → inject. Code is at <a href="https://github.com/bryandong24/SPED" target="_blank" rel="noopener noreferrer">github.com/bryandong24/SPED</a>.</p>
 <h3 id="a-simple-idea-interpolate-the-prompt-embeddings"><a href="#a-simple-idea-interpolate-the-prompt-embeddings">A simple idea: interpolate the prompt embeddings</a></h3>
 <p>The naive way to change the scene mid-generation is to hard-swap the prompt embedding between chunk <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi></mrow><annotation encoding="application/x-tex">t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6151em"></span><span class="mord mathnormal">t</span></span></span></span> and chunk <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6984em;vertical-align:-0.0833em"></span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">1</span></span></span></span>. This fails visibly: the model’s KV cache still encodes the old scene, the new cross-attention conditioning contradicts it, and the video jump-cuts or collapses.</p>
-<p>Instead, we condition each chunk during the transition on a <strong>linear interpolation between the old and new prompt embeddings</strong>:</p>
-<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mover accent="true"><mi>e</mi><mo>~</mo></mover><mi>t</mi></msub><mtext>  </mtext><mo>=</mo><mtext>  </mtext><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msub><mi>λ</mi><mi>t</mi></msub><mo stretchy="false">)</mo><mtext> </mtext><msub><mi>e</mi><mtext>old</mtext></msub><mtext>  </mtext><mo>+</mo><mtext>  </mtext><msub><mi>λ</mi><mi>t</mi></msub><mtext> </mtext><msub><mi>e</mi><mtext>new</mtext></msub><mo separator="true">,</mo><mspace width="2em"></mspace><msub><mi>λ</mi><mi>t</mi></msub><mo>:</mo><mn>0</mn><mo>→</mo><mn>1</mn><mtext> over the transition window</mtext></mrow><annotation encoding="application/x-tex">\tilde{e}_t \;=\; (1-\lambda_t)\, e_{\text{old}} \;+\; \lambda_t\, e_{\text{new}},
-\qquad \lambda_t: 0 \to 1 \text{ over the transition window}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8179em;vertical-align:-0.15em"></span><span class="mord"><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6679em"><span style="top:-3em"><span class="pstrut" style="height:3em"></span><span class="mord mathnormal">e</span></span><span style="top:-3.35em"><span class="pstrut" style="height:3em"></span><span class="accent-body" style="left:-0.1944em"><span class="mord">~</span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em"></span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.1667em"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">old</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord text mtight"><span class="mord mtight">new</span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:2em"></span><span class="mspace" style="margin-right:0.1667em"></span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em"></span></span><span class="base"><span class="strut" style="height:0.6944em"></span><span class="mord">1</span><span class="mord text"><span class="mord"> over the transition window</span></span></span></span></span></span>
-<p>Each successive chunk moves <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\lambda_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em"></span><span class="mord"><span class="mord mathnormal">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em"><span></span></span></span></span></span></span></span></span></span> further toward the new prompt, so the scene <em>morphs</em> rather than cuts: the meadow gradually frosts over instead of teleporting to winter. The KV cache is never invalidated — past frames remain valid context, and the model resolves the changing conditioning the same way it resolves any other temporal change.</p>
+<p>Instead, during a transition each chunk is conditioned on an <strong>interpolation between the old and new prompt embeddings</strong>. The shipped version is a per-token <em>spherical</em> interpolation over the prompt’s token embeddings, with direction and magnitude interpolated separately and a plain lerp fallback where a token pair is nearly collinear, eased by a min-jerk schedule over a ramp of 4 chunks, about 3 seconds of video:</p>
+<pre class="hrd-eq">ẽ_t = slerp(e_old, e_new; g_t),   g_t = r³(10−15r+6r²),   r: 0 → 1 over the ramp</pre>
+<p>Each chunk in the ramp is generated, and cached, under its own interpolated embedding, so the scene <em>morphs</em> rather than cuts: the meadow gradually frosts over instead of teleporting to winter. The KV cache is never invalidated. Past frames remain valid context, and the model resolves the changing conditioning the same way it resolves any other temporal change.</p>
 <pre class="mermaid">flowchart LR
-  P1[&quot;initial prompt e_old&quot;] --&gt; C1[&quot;chunk 1 (λ=0)&quot;]
-  C1 --&quot;KV&quot;--&gt; C2[&quot;chunk 2 (λ=0)&quot;]
-  P2[&quot;injected prompt e_new&quot;] -.-&gt; C3
-  C2 --&quot;KV&quot;--&gt; C3[&quot;chunk 3 (λ=0.5)&quot;]
-  C3 --&quot;KV&quot;--&gt; C4[&quot;chunk 4 (λ=1)&quot;]
-  P1 -.-&gt; C1 &amp; C2 &amp; C3</pre>
+  P1[&quot;initial prompt e_old&quot;] --&gt; C1[&quot;chunk t (g=0)&quot;]
+  C1 --&quot;KV&quot;--&gt; C2[&quot;chunk t+1 (g≈0.1)&quot;]
+  P2[&quot;injected prompt e_new&quot;] -.-&gt; C2 &amp; C3 &amp; C4 &amp; C5
+  C2 --&quot;KV&quot;--&gt; C3[&quot;chunk t+2 (g=0.5)&quot;]
+  C3 --&quot;KV&quot;--&gt; C4[&quot;chunk t+3 (g≈0.9)&quot;]
+  C4 --&quot;KV&quot;--&gt; C5[&quot;chunk t+4 (g=1)&quot;]
+  P1 -.-&gt; C1 &amp; C2 &amp; C3 &amp; C4</pre>
 <h3 id="what-didnt-work"><a href="#what-didnt-work">What didn’t work</a></h3>
-<p>We spent roughly nine hours iterating on prompt-blending methods before landing on the scheme above. For posterity, the graveyard:</p>
-<ul>
-<li><strong>Naive hard swapping</strong> of the prompt embedding — jump cuts and scene collapse.</li>
-<li><strong>Backfilling the KV cache</strong> with the new prompt (as in LongLive <span class="" id="citation--yang2025longlive--2">(<a href="#bib-yang2025longlive" id="refctx-bib-yang2025longlive-1">Yang &amp; others, 2025</a>)</span>) — designed for a different regime; interacted badly with our short chunks.</li>
-<li><strong>Sliding context-window interactions</strong> — the transition point sliding out of the attention window mid-morph caused instability.</li>
-<li><strong>Sweeping coefficients <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em"></span><span class="mord mathnormal" style="margin-right:0.0037em">α</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>β</mi></mrow><annotation encoding="application/x-tex">\beta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em"></span><span class="mord mathnormal" style="margin-right:0.05278em">β</span></span></span></span></strong> that separately weight self-attention and cross-attention contributions during the transition — tunable but brittle.</li>
-<li><strong>Growing the attention window after the cut</strong> — helped stability, and survives in the final recipe.</li>
-</ul>
-<div class="note note--info" data-astro-cid-qg6lmfty> <!-- When there's no title, emoji is above content -->
-    <div class="note__layout" data-astro-cid-qg6lmfty> <div class="note__icon" aria-hidden="true" data-astro-cid-qg6lmfty> <span class="note__emoji" data-astro-cid-qg6lmfty>🧪</span> </div> <div class="note__body" data-astro-cid-qg6lmfty> <div class="note__content" data-astro-cid-qg6lmfty> <p>The final recipe is embarrassingly simple — interpolate the conditioning, leave the cache alone, widen the window briefly after a switch. Every clever variant we tried lost to it.</p> </div> </div> </div> </div> <div id="refs" class="references csl-bib-body" data-built-refs="1"><ol class="references"><li id="bib-gandhi2023distil">Gandhi, S., von Platen, P., &amp; Rush, A. M. (2023). Distil-Whisper: Robust Knowledge Distillation via Large-Scale Pseudo Labelling. <i>arXiv Preprint arXiv:2311.00430</i>.<small class="backrefs"><a href="#refctx-bib-gandhi2023distil-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li><li id="bib-yang2025longlive">Yang, S., &amp; others. (2025). LongLive: Real-time Interactive Long Video Generation. <i>arXiv Preprint</i>.<small class="backrefs"><a href="#refctx-bib-yang2025longlive-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li></ol></div>
+<p>Almost everything we tried before the ramp was a fight with the KV cache, so it is worth being precise about what that cache is doing. Each new chunk is generated by attending over two things: the text prompt, through cross-attention, and a cache of keys and values from the recently generated (clean) frames, through self-attention. The prompt says what the scene should be; the cached frames say what it has been. When you swap the prompt, the cross-attention conditioning flips immediately, but the cached keys and values still encode the old scene, and self-attention keeps pulling generation back toward it. LongLive <span class="" id="citation--yang2025longlive--2">(<a href="#bib-yang2025longlive" id="refctx-bib-yang2025longlive-1">Yang &amp; others, 2025</a>)</span> calls this semantic inertia, and it is exactly what a naive hard swap runs into: for a few chunks the old scene wins, then the new conditioning takes over all at once and the video jump-cuts or collapses.</p>
+<p>The direct fix, and LongLive’s actual mechanism, is to <strong>re-cache</strong>: at the switch, recompute the cached keys and values for the recent frames under the new prompt, so the history reads as if it had always been heading toward the new scene. That removes the inertia, but LongLive only gets away with it because it is paired with streaming long tuning, fine-tuning the model on long sequences that contain prompt switches so it learns to make a recomputed cache consistent with the frames generated after it. We were training-free, so we got the re-caching without the training that makes it behave. On our short chunks the recomputed history and the post-switch frames disagreed at the boundary, and the seam was visible. We reproduced the mechanism and inherited none of the tuning that hides its artifacts.</p>
+<p>Shrinking the context window around the switch is the blunt version of the same idea: throw away most of the cached frames and there is less old-scene history left to argue with the new prompt, so the transition lands sooner. It also lands as a cut. With little history to attend over, the model loses temporal continuity across the boundary and the two halves stop looking like one continuous shot.</p>
+<p>Between those extremes we tried a run of cache surgeries, each aimed at the inertia from a different angle: keeping the self-attention keys but swapping the values, re-caching under a null prompt to wash out the old conditioning without committing to the new one, and projecting the old prompt’s direction out of the cached representations. We also tried leaving the cache alone and instead reweighting the two attention pathways for a few chunks after a switch, scaling the cross-attention (text) term up and the self-attention (past-frame) term down and sweeping the two coefficients. All of it was tunable and none of it generalized: a setting that gave a clean morph on one transition destabilized the next.</p>
+<p>What finally worked was to stop editing the cache at all. Nothing in it is ever recomputed or discarded, so it can never be inconsistent; the prompt embedding is ramped over a few chunks instead, as described above, and each chunk is generated under a prompt only slightly different from the one that produced the frames it attends over. The model reads the change as ordinary temporal drift rather than a contradiction, and the scene morphs on its own. Growing the attention window slightly after a switch helped in a couple of runs, but the ramp alone was enough that the shipped recipe leaves it out.</p>
+<div id="refs" class="references csl-bib-body" data-built-refs="1"><ol class="references"><li id="bib-gandhi2023distil">Gandhi, S., von Platen, P., &amp; Rush, A. M. (2023). Distil-Whisper: Robust Knowledge Distillation via Large-Scale Pseudo Labelling. <i>arXiv Preprint arXiv:2311.00430</i>.<small class="backrefs"><a href="#refctx-bib-gandhi2023distil-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li><li id="bib-yang2025longlive">Yang, S., &amp; others. (2025). LongLive: Real-time Interactive Long Video Generation. <i>arXiv Preprint</i>.<small class="backrefs"><a href="#refctx-bib-yang2025longlive-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li></ol></div>
 <h2 id="speed-spectral-progressive-diffusion"><a href="#speed-spectral-progressive-diffusion">SPEED: Spectral Progressive Diffusion</a></h2>
 <p>Interactivity is only worth having if the video keeps up with you. Our first problem: denoising a full grid of video tokens costs <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em"></span><span class="mord mathnormal" style="margin-right:0.02778em">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em"><span style="top:-3.063em;margin-right:0.05em"><span class="pstrut" style="height:2.7em"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> in self-attention, and every denoising step pays it at full resolution.</p>
-<p><strong>SPEED (Spectral Progressive Diffusion)</strong> restructures denoising to be <em>spectrally autoregressive in the frequency domain</em>: early steps operate on a low-frequency representation of the chunk (structure, layout, motion), and later steps progressively introduce higher frequency bands (texture, detail). Because early steps see far fewer effective tokens, their attention cost drops sharply, and the expensive full-resolution work is reserved for the final refinement steps where it actually matters.</p>
-<p>On the Causal Forcing base model, SPEED yields a <strong>10% throughput increase</strong> with no training and no visible quality loss.</p>
+<p><strong>SPEED (Spectral Progressive Diffusion)</strong> (<a href="https://arxiv.org/abs/2605.18736" target="_blank" rel="noopener noreferrer">Xiao et al., 2026</a>) makes denoising <em>spectrally autoregressive</em>: early, high-noise steps run at reduced resolution, since structure, layout, and motion live in the low frequencies, and later steps restore full resolution for texture and detail. We ported it into the causal, streaming setting, which took two fixes: RoPE indices are strided so low-resolution tokens land on the full-resolution position grid, and the cache-commit pass stays at full resolution so the KV cache never sees low-res context.</p>
+<p>On the frame-wise Causal Forcing++ model this is worth about <strong>10%</strong>: 22.2 → 24.3 FPS at half spatial scale with one low-resolution step, no visible quality loss. Modest, and honestly so, since this model is already a few-step sampler, so there is little high-noise work left to make cheap. The paper’s larger wins (2× and up) come from 50-step, full-resolution sampling.</p>
 
 <h2 id="kernel-level-inference-optimizations"><a href="#kernel-level-inference-optimizations">Kernel-Level Inference Optimizations</a></h2>
 <p>To know where the milliseconds were going, we profiled a full generation step. The op breakdown:</p>
@@ -1348,62 +983,61 @@ Download PDF
 
 
 <div class="table-scroll"><table><thead><tr><th>Operation class</th><th>Share of step time</th><th>What we did</th></tr></thead><tbody><tr><td>Attention</td><td>64%</td><td>FlashAttention 3 <span class="" id="citation--shah2024flashattention3--1">(<a href="#bib-shah2024flashattention3" id="refctx-bib-shah2024flashattention3-1">Shah et al., 2024</a>)</span></td></tr><tr><td>Memory movement / elementwise</td><td>24%</td><td>Fused custom kernels</td></tr><tr><td>GEMM / linear</td><td>12%</td><td>Left to cuBLAS</td></tr><tr><td>Normalization</td><td>~1%</td><td>Fused custom RMSNorm</td></tr></tbody></table></div>
-<p>Two observations drove the kernel work. First, attention dominates — switching to <strong>FlashAttention 3</strong> captured significant savings there for free. Second, nearly a quarter of the step is <em>not math at all</em> — it’s memory movement and small elementwise ops, each launching its own kernel and each making a round trip to HBM.</p>
+<p>Two observations drove the kernel work. First, attention dominates, so switching to <strong>FlashAttention 3</strong> captured significant savings there for free. Second, nearly a quarter of the step is <em>not math at all</em>. It is memory movement and small elementwise ops, each launching its own kernel and each making a round trip to HBM.</p>
 <p>We wrote <strong>fused kernels</strong> that overlap compute with memory traffic and collapse chains of small ops into single launches:</p>
 <ul>
-<li><strong>Fused RMSNorm: 7.71× speedup</strong> over the unfused baseline.<div class="sidenote-container"> <aside class="sidenote"> Norm is only ~1% of the step, so the end-to-end effect is small — but it was the cleanest demonstration that the fusion approach works, and the same pattern generalized to the gate. </aside> </div>  </li>
+<li><strong>Fused RMSNorm: 7.71× speedup</strong> over the unfused baseline.<div class="sidenote-container"> <aside class="sidenote"> Norm is only ~1% of the step, so the end-to-end effect is small, but it was the cleanest demonstration that the fusion approach works, and the same pattern generalized to the gate. </aside> </div>  </li>
 <li><strong>Fused SiLU gate: 1.68× speedup</strong>, attacking the elementwise share directly.</li>
 </ul>
 <div id="refs" class="references csl-bib-body" data-built-refs="1"><ol class="references"><li id="bib-shah2024flashattention3">Shah, J., Bikshandi, G., Zhang, Y., Thakkar, V., Ramani, P., &amp; Dao, T. (2024). FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision. <i>Advances in Neural Information Processing Systems (NeurIPS)</i>.<small class="backrefs"><a href="#refctx-bib-shah2024flashattention3-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li></ol></div>
 <h2 id="pipeline-parallelism"><a href="#pipeline-parallelism">Pipeline Parallelism</a></h2>
-<p>Even with fast kernels, one GPU doing <em>everything</em> was not real-time. Generating 750 ms of video took <strong>976 ms</strong> when a single GPU ran both the DiT denoising and the VAE decode — slower than playback, which means choppy video no matter how you buffer it.</p>
+<p>Even with fast kernels, one GPU doing <em>everything</em> was not real-time. Generating 750 ms of video took <strong>976 ms</strong> when a single GPU ran both the DiT denoising and the VAE decode, slower than playback, which means choppy video no matter how you buffer it.</p>
 <p>The fix is classic systems work: the two stages have no reason to share a device.</p>
 <pre class="mermaid">flowchart LR
-  subgraph GPU0[&quot;GPU 0 — DiT generation&quot;]
-    A[&quot;noise → 5 denoise steps → latent (~700 ms)&quot;]
+  subgraph GPU0[&quot;GPU 0: DiT generation&quot;]
+    A[&quot;noise → 4 denoise steps → latent (~700 ms)&quot;]
   end
-  subgraph GPU1[&quot;GPU 1 — VAE decode&quot;]
+  subgraph GPU1[&quot;GPU 1: VAE decode&quot;]
     B[&quot;latent → RGB frames (~276 ms)&quot;]
   end
   A --&quot;FIFO queue over NVLink&quot;--&gt; B
   B --&gt; C[&quot;display&quot;]</pre>
 <ul>
-<li><strong>GPU 0</strong> runs the DiT: raw noise in, five denoising steps, latent tensor out — <strong>~700 ms per chunk</strong>.</li>
-<li><strong>GPU 1</strong> runs the VAE decode: latent tensor in, RGB pixel frames out — <strong>~276 ms per chunk</strong>.</li>
+<li><strong>GPU 0</strong> runs the DiT: raw noise in, four denoising steps, latent tensor out, about <strong>700 ms per chunk</strong>.</li>
+<li><strong>GPU 1</strong> runs the VAE decode: latent tensor in, RGB pixel frames out, about <strong>276 ms per chunk</strong>.</li>
 <li>A <strong>FIFO queue over NVLink</strong> connects them: while GPU 0 generates chunk <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em"></span><span class="mord mathnormal" style="margin-right:0.10903em">N</span></span></span></span>, it ships chunk <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em"></span><span class="mord mathnormal" style="margin-right:0.10903em">N</span><span class="mspace" style="margin-right:0.2222em"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em"></span></span><span class="base"><span class="strut" style="height:0.6444em"></span><span class="mord">1</span></span></span></span> to GPU 1 for decoding.</li>
 </ul>
-<p>The VAE decode is now fully hidden behind the next chunk’s generation. End-to-end latency drops by <strong>28%</strong>, and the critical path per chunk becomes just the 700 ms DiT pass — comfortably under the 750 ms of video each chunk contains.</p>
-<div class="note note--success" data-astro-cid-qg6lmfty> <!-- When there's no title, emoji is above content -->
-    <div class="note__layout" data-astro-cid-qg6lmfty> <div class="note__icon" aria-hidden="true" data-astro-cid-qg6lmfty> <span class="note__emoji" data-astro-cid-qg6lmfty>⏱️</span> </div> <div class="note__body" data-astro-cid-qg6lmfty> <div class="note__content" data-astro-cid-qg6lmfty> <p><strong>700 ms of compute per 750 ms of video.</strong> Generation now runs faster than playback — the whole point.</p> </div> </div> </div> </div> 
+<p>The VAE decode is now fully hidden behind the next chunk’s generation. End-to-end latency drops by <strong>28%</strong>, and the critical path per chunk becomes just the 700 ms DiT pass, comfortably under the 750 ms of video each chunk contains.</p>
+
 <h2 id="results"><a href="#results">Results</a></h2>
-<p>Putting it together, the live system:</p>
+<p>What the live system does:</p>
 <ul>
-<li><strong>Runs faster than real time</strong> — 700 ms of compute per chunk containing 750 ms of video.</li>
-<li><strong>Responds in 0.69 seconds end-to-end</strong> from spoken words to generated pixels (ASR → embedding → injection → first affected chunk).</li>
-<li><strong>Transitions smoothly</strong> — prompt injections morph the scene (meadow → winter, beach → storm, dog → wolf) with no jump cuts and no cache resets.</li>
-<li><strong>Requires zero training and zero data</strong> — the method touches only inference-time conditioning, so it applies to <em>any</em> prompt-conditioned autoregressive video generation model.</li>
+<li>Generation stays ahead of playback, at 700 ms of compute per chunk, and each chunk is 750 ms of video.</li>
+<li>0.69 s from the end of speech to the first affected pixels (transcribe → embed → inject → next chunk).</li>
+<li>Transitions morph instead of cutting (meadow to winter, beach to storm, dog to wolf) with the KV cache intact the whole way through.</li>
+<li>Nothing is trained, so nothing is model-specific.</li>
 </ul>
 <div class="wide"> <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 20px;"><figure style="margin: 0;"><video src="/research/interactive-world-models/video/dog-run.mp4" autoplay loop muted="true" playsinline style="width: 100%; border-radius: 4px;"></video><figcaption style="font-size: 0.85em; opacity: 0.7; margin-top: 6px;">”dog running in meadow” → <em>winter background replaces meadow</em></figcaption></figure><figure style="margin: 0;"><video src="/research/interactive-world-models/video/car.mp4" autoplay loop muted="true" playsinline style="width: 100%; border-radius: 4px;"></video><figcaption style="font-size: 0.85em; opacity: 0.7; margin-top: 6px;">”luxury car near beach” → <em>neon city replaces beach</em></figcaption></figure><figure style="margin: 0;"><video src="/research/interactive-world-models/video/storm.mp4" autoplay loop muted="true" playsinline style="width: 100%; border-radius: 4px;"></video><figcaption style="font-size: 0.85em; opacity: 0.7; margin-top: 6px;">”beach scene” → <em>a storm erupts on the beach</em></figcaption></figure><figure style="margin: 0;"><video src="/research/interactive-world-models/video/meadow-wolf.mp4" autoplay loop muted="true" playsinline style="width: 100%; border-radius: 4px;"></video><figcaption style="font-size: 0.85em; opacity: 0.7; margin-top: 6px;">”dog running through meadow” → <em>dog becomes wolf in winter background</em></figcaption></figure></div> </div>
 <h3 id="relation-to-prior-work"><a href="#relation-to-prior-work">Relation to prior work</a></h3>
 <p>Training-free semantic control of diffusion models is a rich area; our contribution is doing it <em>mid-stream in an autoregressive video model, at real-time speeds</em>:</p>
 <ul>
-<li><strong>Prompt-to-Prompt</strong> <span class="" id="citation--hertz2022prompt--1">(<a href="#bib-hertz2022prompt" id="refctx-bib-hertz2022prompt-1">Hertz et al., 2023</a>)</span> edits images by manipulating cross-attention maps — we modify <strong>no attention maps</strong>, only the conditioning embedding.</li>
-<li><strong>Attend-and-Excite</strong> <span class="" id="citation--chefer2023attend--2">(<a href="#bib-chefer2023attend" id="refctx-bib-chefer2023attend-1">Chefer et al., 2023</a>)</span> optimizes latents at sampling time to strengthen semantics — we require <strong>no latent optimization</strong>.</li>
-<li><strong>SEGA</strong> <span class="" id="citation--brack2023sega--3">(<a href="#bib-brack2023sega" id="refctx-bib-brack2023sega-1">Brack et al., 2023</a>)</span> steers generation along semantic directions found in noise-estimate space — we need <strong>no search for steering vectors</strong>.</li>
+<li><strong>Prompt-to-Prompt</strong> <span class="" id="citation--hertz2022prompt--1">(<a href="#bib-hertz2022prompt" id="refctx-bib-hertz2022prompt-1">Hertz et al., 2023</a>)</span> edits images by manipulating cross-attention maps, while we modify <strong>no attention maps</strong>, only the conditioning embedding.</li>
+<li><strong>Attend-and-Excite</strong> <span class="" id="citation--chefer2023attend--2">(<a href="#bib-chefer2023attend" id="refctx-bib-chefer2023attend-1">Chefer et al., 2023</a>)</span> optimizes latents at sampling time to strengthen semantics, while we require <strong>no latent optimization</strong>.</li>
+<li><strong>SEGA</strong> <span class="" id="citation--brack2023sega--3">(<a href="#bib-brack2023sega" id="refctx-bib-brack2023sega-1">Brack et al., 2023</a>)</span> steers generation along semantic directions found in noise-estimate space, while we need <strong>no search for steering vectors</strong>.</li>
 </ul>
 <p>The interpolation scheme is strictly simpler than all three, which is what makes it fast enough to run inside a real-time loop.</p><div id="refs" class="references csl-bib-body" data-built-refs="1"><ol class="references"><li id="bib-brack2023sega">Brack, M., Friedrich, F., Hintersdorf, D., Struppek, L., Schramowski, P., &amp; Kersting, K. (2023). SEGA: Instructing Text-to-Image Models using Semantic Guidance. <i>Advances in Neural Information Processing Systems (NeurIPS)</i>.<small class="backrefs"><a href="#refctx-bib-brack2023sega-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li><li id="bib-chefer2023attend">Chefer, H., Alaluf, Y., Vinker, Y., Wolf, L., &amp; Cohen-Or, D. (2023). Attend-and-Excite: Attention-Based Semantic Guidance for Text-to-Image Diffusion Models. <i>ACM Transactions on Graphics (SIGGRAPH)</i>.<small class="backrefs"><a href="#refctx-bib-chefer2023attend-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li><li id="bib-hertz2022prompt">Hertz, A., Mokady, R., Tenenbaum, J., Aberman, K., Pritch, Y., &amp; Cohen-Or, D. (2023). Prompt-to-Prompt Image Editing with Cross-Attention Control. <i>International Conference on Learning Representations (ICLR)</i>.<small class="backrefs"><a href="#refctx-bib-hertz2022prompt-1" aria-label="Back to citation"><svg class="back-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg></a></small></li></ol></div>
 <h2 id="the-infinite-compute-regime"><a href="#the-infinite-compute-regime">The Infinite-Compute Regime</a></h2>
-<p>The deeper reason we’re excited about this line of work: <strong>diffusion models thrive in the high-compute, low-data regime</strong>, and inference-time compute is the resource whose price is falling fastest. Every optimization in this post — spectral scheduling, kernel fusion, pipeline parallelism — converts raw compute into <em>interactivity</em> without touching the model’s weights or requiring a single training example.</p>
-<p>Once a video generator is (a) real-time and (b) steerable mid-stream, it stops being a media tool and starts being a <strong>learned simulator</strong>. You are no longer rendering clips; you are perturbing the state of a world model with language and watching it respond. This is full-duplex conversation, but for video.</p>
-<p>Some applications we find obvious in hindsight:</p>
+<p>Diffusion models do best in the high-compute, low-data regime, and that is the regime that keeps getting cheaper. Everything in this post spends compute instead of data: the interpolation is free, SPEED and the kernels buy latency back, and the pipeline spends a second GPU. None of it touches the weights.</p>
+<p>A video model that is real-time and steerable mid-stream stops behaving like a media tool and starts behaving like a learned simulator. It is full-duplex, but for video.</p>
+<p>The uses we actually want it for:</p>
 <ul>
-<li><strong>Video game experiences</strong> where the world is generated, not authored — and reacts to what players say.</li>
-<li><strong>Learning experiences</strong> where an explanation can be visualized, then transformed on request (“now show it in winter”, “now slow it down”).</li>
-<li><strong>An actually immersive metaverse</strong> — persistent generated environments that respond to their inhabitants in real time.</li>
+<li>games where the world is generated rather than authored, and reacts to what players say;</li>
+<li>explanations that can be transformed on request, like “now show it in winter” or “now slow it down”;</li>
+<li>persistent generated environments that respond to the people in them.</li>
 </ul>
-<p>All of this scales with inference-time compute, none of it with data collection. In the infinite-compute limit, the interactive world model is just <em>there</em>, waiting to be steered.</p>
+<p>All of it scales with inference-time compute, and none of it with data collection.</p>
 <hr/>
-<p><em>Built at the 2026 Inference-Time Compute Hackathon by Ray Kasichainula, Subha Vadlamannati, Bryan Dong, and Gino Chiaranaipanich.</em></p> </main> </section> <footer class="footer"> <div class="footer-inner"> <section class="citation-block"> <p class="footer-heading" role="heading" aria-level="2">Citation</p> <p>For attribution in academic contexts, please cite this work as</p> <pre class="citation short">Ray Kasichainula, Subha Vadlamannati, Bryan Dong, Gino Chiaranaipanich (2026). &quot;Training-Free Interactive World Models&quot;.</pre> <p>BibTeX citation</p> <pre class="citation long">@misc{kasichainula2026_training_free_interactive_world_models,
+<p><em>Built at the 2026 Inference-Time Compute Hackathon (Etched × Mercor × Cognition × Anthropic) by Ray Kasichainula, Subha Vadlamannati, Bryan Dong, and Gino Chiaranaipanich, where it won the $50,000 grand prize. Code: <a href="https://github.com/bryandong24/SPED" target="_blank" rel="noopener noreferrer">github.com/bryandong24/SPED</a>.</em></p> </main> </section> <footer class="footer"> <div class="footer-inner"> <section class="citation-block"> <p class="footer-heading" role="heading" aria-level="2">Citation</p> <p>For attribution in academic contexts, please cite this work as</p> <pre class="citation short">Ray Kasichainula, Subha Vadlamannati, Bryan Dong, Gino Chiaranaipanich (2026). &quot;Training-Free Interactive World Models&quot;.</pre> <p>BibTeX citation</p> <pre class="citation long">@misc{kasichainula2026_training_free_interactive_world_models,
   title={Training-Free Interactive World Models},
   author={Ray Kasichainula and Subha Vadlamannati and Bryan Dong and Gino Chiaranaipanich},
   year={2026},
@@ -1573,4 +1207,4 @@ Made with ❤️ with <a href="https://huggingface.co/spaces/tfrere/research-art
     // Resize on window changes (e.g., fonts, layout)
     // No textarea auto-resize needed for <pre> blocks
   })();
-</script>    </body> </html>
+</script>    <script>document.querySelectorAll(".theme-toggle").forEach((btn)=>{btn.addEventListener("click",()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;document.body.dataset.theme=next;localStorage.setItem("theme",next);});});</script> </body> </html>

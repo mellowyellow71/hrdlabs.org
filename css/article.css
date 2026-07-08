@@ -1,0 +1,271 @@
+/* HRD Labs — unified article theme.
+   Loaded after the Astro template CSS; overrides its variables so research
+   articles share the main site's terminal look. Light by default, dark via
+   [data-theme=dark] (same storage key as the rest of the site). */
+
+:root,
+[data-theme=light] {
+  --page-bg: #faf8f4;
+  --surface-bg: #f2eee5;
+  --text-color: #3c3a34;
+  --muted-color: #6e6a5f;
+  --border-color: #e6e1d5;
+  --code-bg: #f0ece1;
+  --primary-base: #a08343;
+  --primary-color: #a08343;
+  --on-primary: #faf8f4;
+  --transparent-page-contrast: rgba(250, 248, 244, .85);
+  --link-underline: rgba(160, 131, 67, .45);
+  --link-underline-hover: #a08343;
+  --table-header-bg: #f0ece1;
+  --table-row-odd-bg: #f5f2ea;
+  --axis-color: #6e6a5f;
+  --tick-color: #6e6a5f;
+  --grid-color: rgba(60, 58, 52, .08);
+  --default-font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  /* site accents */
+  --hrd-heading: #26241f;
+  --hrd-faint: #928d7f;
+  --hrd-tan: #a08343;
+  --hrd-green: #66794f;
+  --hrd-teal: #4f7a74;
+  --hrd-cat: #4a463d;
+  --hrd-frame: #d9d3c3;
+  --hrd-shadow: #eae5d9;
+  --hrd-chip: #d9d3c3;
+  color-scheme: light;
+}
+
+[data-theme=dark] {
+  --page-bg: #070606;
+  --surface-bg: #0d0c0b;
+  --text-color: #c5c9c5;
+  --muted-color: #a6a69c;
+  --border-color: #1f1e1c;
+  --code-bg: #100f0e;
+  --primary-base: #c4b28a;
+  --primary-color: #c4b28a;
+  --on-primary: #070606;
+  --transparent-page-contrast: rgba(7, 6, 6, .85);
+  --link-underline: rgba(196, 178, 138, .45);
+  --link-underline-hover: #c4b28a;
+  --table-header-bg: #100f0e;
+  --table-row-odd-bg: #0b0a09;
+  --axis-color: #a6a69c;
+  --tick-color: #a6a69c;
+  --grid-color: rgba(197, 201, 197, .08);
+  --hrd-heading: #e8e4df;
+  --hrd-faint: #575350;
+  --hrd-tan: #c4b28a;
+  --hrd-green: #8a9a7b;
+  --hrd-teal: #8ea4a2;
+  --hrd-cat: #e8e4df;
+  --hrd-frame: #2b2a28;
+  --hrd-shadow: #14120f;
+  --hrd-chip: #2b2a28;
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--page-bg);
+}
+
+::selection {
+  background: var(--hrd-tan);
+  color: var(--page-bg);
+}
+
+h1, h2, h3, h4, h5, h6,
+.hero-title {
+  color: var(--hrd-heading);
+}
+
+/* Mono display type runs wide — size the title down so it sits on two lines */
+.hero-title,
+.hero-title[data-astro-cid-uzw5or4x] {
+  font-size: clamp(26px, 4.6vw, 40px);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+/* Mono runs wide in data tables — tighten so less horizontal scroll is needed */
+main table {
+  font-size: 13px;
+}
+
+/* Display equation, set as terminal text */
+.hrd-eq {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--text-color);
+  background: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  padding: 14px 18px;
+  margin: 20px 0;
+  text-align: center;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Callout accents, retuned to the site palette */
+.note--info {
+  border-left-color: var(--hrd-tan);
+  background: color-mix(in oklab, var(--hrd-tan) 8%, var(--surface-bg));
+}
+
+.note--success {
+  border-left-color: var(--hrd-green);
+  background: color-mix(in oklab, var(--hrd-green) 8%, var(--surface-bg));
+}
+
+/* ---- HRD Labs terminal bar ---- */
+.hrd-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--page-bg);
+}
+
+.hrd-bar a {
+  text-decoration: none;
+}
+
+.hrd-bar__home {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--hrd-heading);
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.hrd-bar__home:hover {
+  color: var(--hrd-tan);
+}
+
+.hrd-bar__cat {
+  width: 33px;
+  height: 28px;
+  color: var(--hrd-cat);
+  flex-shrink: 0;
+}
+
+.hrd-bar__path {
+  color: var(--hrd-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.hrd-bar__cursor {
+  flex-shrink: 0;
+  width: 8px;
+  height: 15px;
+  background: var(--hrd-tan);
+  animation: hrd-blink 2.2s step-end infinite;
+}
+
+@keyframes hrd-blink {
+  0%, 55% { opacity: 1; }
+  55.01%, 100% { opacity: 0; }
+}
+
+.hrd-bar .theme-toggle {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--hrd-chip);
+  border-radius: 2px;
+  color: var(--muted-color);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.hrd-bar .theme-toggle:hover {
+  color: var(--hrd-tan);
+  border-color: var(--hrd-faint);
+}
+
+.theme-toggle .icon-sun { display: none; }
+[data-theme=dark] .theme-toggle .icon-sun { display: block; }
+[data-theme=dark] .theme-toggle .icon-moon { display: none; }
+
+.hrd-bar__back {
+  flex-shrink: 0;
+  color: var(--hrd-teal);
+}
+
+.hrd-bar__back:hover {
+  color: var(--hrd-tan);
+}
+
+@media (max-width: 560px) {
+  .hrd-bar {
+    padding: 14px 16px;
+  }
+
+  .hrd-bar__path,
+  .hrd-bar__cursor {
+    display: none;
+  }
+}
+
+/* Keep the floating mobile TOC button clear of the terminal bar */
+.toc-mobile-toggle {
+  top: 76px;
+}
+
+/* ---- Hero demo video (replaces the old decorative banner) ---- */
+.hero-banner,
+.hero-banner[data-astro-cid-uzw5or4x] {
+  aspect-ratio: auto;
+  height: auto;
+  overflow: visible;
+}
+
+.hero-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-demo video {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--hrd-frame);
+  border-radius: 2px;
+  background: #000;
+  box-shadow: 6px 6px 0 var(--hrd-shadow);
+}
+
+.hero-demo__caption {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted-color);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hrd-bar__cursor {
+    animation: none;
+  }
+}
