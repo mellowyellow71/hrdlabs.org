@@ -67,22 +67,16 @@ a {
 }
 
 .masthead-cat {
-  width: 66px;
-  height: 57px;
+  height: 76px;
+  width: auto;
   display: block;
+  align-self: flex-start;
 }
 
 .masthead-title {
   display: flex;
   align-items: baseline;
   gap: 12px;
-}
-
-.logo-mark {
-  height: 44px;
-  width: auto;
-  align-self: center;
-  margin-right: 4px;
 }
 
 .masthead-title h1 {
