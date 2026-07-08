@@ -6,14 +6,14 @@
 }
 
 :root {
-  --color-bg: #181616;
-  --color-bg-hover: #1d1c19;
+  --color-bg: #070606;
+  --color-bg-hover: #100f0e;
   --color-fg: #c5c9c5;
   --color-dim: #a6a69c;
-  --color-faint: #625e5a;
-  --color-border: #282727;
-  --color-chip-border: #393836;
-  --color-faintest: #393836;
+  --color-faint: #575350;
+  --color-border: #1f1e1c;
+  --color-chip-border: #2b2a28;
+  --color-faintest: #34322f;
   --color-tan: #c4b28a;
   --color-green: #8a9a7b;
   --color-blue: #8ba4b0;
@@ -40,7 +40,7 @@ body {
 
 ::selection {
   background: var(--color-tan);
-  color: #0d0c0c;
+  color: #070606;
 }
 
 a {
@@ -53,7 +53,7 @@ a {
   width: 100%;
   min-width: 0;
   max-width: 680px;
-  padding: 88px 0 96px;
+  padding: 80px 0 96px;
   display: flex;
   flex-direction: column;
   gap: 72px;
@@ -63,7 +63,13 @@ a {
 .masthead {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
+}
+
+.masthead-cat {
+  width: 66px;
+  height: 57px;
+  display: block;
 }
 
 .masthead-title {
@@ -83,7 +89,7 @@ a {
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--color-fg);
+  color: #e8e4df;
 }
 
 .tilde {
@@ -98,12 +104,12 @@ a {
   height: 18px;
   background: var(--color-tan);
   transform: translateY(3px);
-  animation: blink 1.2s step-end infinite;
+  animation: blink 2.2s step-end infinite;
 }
 
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%, 55% { opacity: 1; }
+  55.01%, 100% { opacity: 0; }
 }
 
 .tagline {
@@ -118,24 +124,6 @@ a {
 
 .hl-worldmodels {
   color: var(--color-blue);
-}
-
-.nav {
-  display: flex;
-  gap: 24px;
-  font-size: 14px;
-}
-
-.nav a {
-  color: var(--color-faint);
-}
-
-.nav a.active {
-  color: var(--color-tan);
-}
-
-.nav a:hover {
-  color: var(--color-fg);
 }
 
 /* Prompt lines */
@@ -217,35 +205,11 @@ a {
   text-wrap: pretty;
 }
 
-/* KRABS */
-.krabs {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.crossword {
-  font-family: var(--font-mono);
-  font-size: 20px;
-  line-height: 1.7;
-  letter-spacing: 0.05em;
-  color: var(--color-fg);
-  overflow-x: auto;
-  margin-top: 8px;
-}
-
-.crossword .highlight {
-  font-weight: 700;
-  color: var(--color-tan);
-}
-
 /* Footer */
 .footer {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  border-top: 1px solid var(--color-border);
-  padding-top: 32px;
 }
 
 .footer-links {
@@ -290,4 +254,26 @@ a {
   .tag {
     justify-self: start;
   }
+}
+
+/* ---- KRABS crossword (research.html) ---- */
+.krabs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.crossword {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+  color: var(--color-fg);
+  overflow-x: auto;
+  margin-top: 8px;
+}
+
+.crossword .highlight {
+  font-weight: 700;
+  color: var(--color-tan);
 }
