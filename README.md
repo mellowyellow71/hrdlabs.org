@@ -18,6 +18,13 @@ The site is a static, dependency-free site served through GitHub Pages (`CNAME` 
 
 ## Changelog
 
+### 2026-07-07 — Article copy edits
+- Removed the emoji + colored callout boxes (the demo-examples, "embarrassingly simple", and "700 ms" popups) that read as AI-generated.
+- Removed every em dash from the article body and `llms.txt`; sentences were restructured rather than mechanically swapped.
+- Rewrote the intro to open with motivation (video models as world models you can steer) instead of the "prompt is locked in" line.
+- Swapped the hero video to the luxury-car / neon-city example.
+- Rewrote "What didn't work" from a bullet list into technical prose: KV-cache semantic inertia, LongLive's re-cache mechanism and why it needs streaming long tuning, context-window shrinking, cache surgeries, and attention reweighting, and why the ramp beats all of them.
+
 ### 2026-07-07 — Article rewrite: plainer voice, verified facts, real ablations
 - Rewrote the intro, results, and closing of the interactive-world-models article to match the team's own writing voice, dropping the marketing framing.
 - Corrected the method description against the actual code (github.com/bryandong24/SPED): the shipped interpolation is a **per-token slerp with min-jerk easing over a 4-chunk (~3 s) ramp**, not a plain linear interpolation; the chunkwise model uses **4 denoising steps**, not 5; added resolution (480×832 @ 16 fps), umT5-xxl conditioning, and the 21+3 sliding window to Setup.
