@@ -10,13 +10,13 @@
 
 ## Introduction
 
-We are interested in video models as world models. Once a model can produce frames about as fast as you watch them, the interesting question stops being which clip you got back and becomes whether you can change what happens while it runs. A model you can steer mid-generation behaves less like a render job and more like a simulator you talk to, and that is the direction we wanted to push on.
+$50k Grand Prize Winner @ Inference Time Compute Hackathon by Etched x Mercor x Cognition x Anthropic. 06/20/2026. Inspired by a recent release of Thinking Machine's full duplex interactive models, we wanted to bring real-interactive capabilities to video generation. We found video generation to be an interesting medium, not only due to its inherently fun demonstrability, but also since there was an interesting problem to be solved.
 
-Today's video models don't work that way. You write a prompt, the model samples for a while, and you get back a fixed clip. If you change your mind partway through, say the meadow should be snowing now, or the dog should be a wolf, there is nothing to do but stop, re-prompt, and wait for a new clip that has no relationship to the one you were just watching.
+Once a model can produce frames about as fast as you watch them, the interesting question stops being which clip you got back and becomes whether you can change what happens while it runs. A model you can steer mid-generation behaves less like a render job and more like a simulator you talk to, and had potential for further exploration.
 
-We wanted to change the prompt *while the model generates*: say "dog running through a meadow", watch the dog show up, then say "it's winter now" and watch the meadow frost over, as one continuous video with no retraining and no stitching. The framing follows Thinking Machines' *Interaction Models* post, applied to video instead of text.
+Today's video gen models treat a clip as one closed computation. The prompt is encoded once, and an autoregressive model denoises chunk after chunk while a KV cache accumulates every frame generated so far, which is what keeps each new chunk consistent with the last. The same cache is what makes the model stubborn: the old scene is baked into its context, so a new prompt injected midway is contradicted by everything the model remembers. The honest fix would be a full-duplex model trained to listen while it generates, but that takes interaction data and training compute we did not have, so the problem becomes getting interactivity purely at inference time from a model that was never trained for it.
 
-We built the system at the 2026 Inference-Time Compute Hackathon. Two things have to work at once: you have to inject a new prompt mid-stream without breaking the video, and generation has to be fast enough that "mid-stream" means anything at all.
+Two things have to work at once: you have to inject a new prompt mid-stream without breaking the video, and generation has to be fast enough that "mid-stream" means anything at all.
 
 1. **Prompt injection.** During a transition, each chunk is conditioned on an interpolation between the old and new prompt embeddings. That is the entire method, with no fine-tuning, no adapters, and no data, so it works on any prompt-conditioned autoregressive video model.
 2. **Real-time inference.** Spectral resolution scheduling, FlashAttention 3, fused kernels, and a two-GPU DiT/VAE pipeline: 700 ms of compute per 750 ms chunk of video, and 0.69 s from voice to pixels.
