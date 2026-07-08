@@ -72,6 +72,13 @@ a {
   gap: 12px;
 }
 
+.logo-mark {
+  height: 44px;
+  width: auto;
+  align-self: center;
+  margin-right: 4px;
+}
+
 .masthead-title h1 {
   font-size: 22px;
   font-weight: 700;
