@@ -154,9 +154,11 @@ main table {
 }
 
 .hrd-bar__cat {
-  width: 33px;
+  width: 23px;
   height: 28px;
-  color: var(--hrd-cat);
+  background-color: var(--hrd-cat);
+  -webkit-mask: url("/assets/catgirl-light.svg") no-repeat center / contain;
+  mask: url("/assets/catgirl-light.svg") no-repeat center / contain;
   flex-shrink: 0;
 }
 
